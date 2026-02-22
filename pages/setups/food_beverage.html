@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>siteo · Configura il tuo sito (Food & Beverage)</title>
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <link rel="stylesheet" href="/src/css/main.css">
+    <link rel="stylesheet" href="/src/css/forms.css">
+    <!-- Google Fonts / CSS reset (minimal) -->
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="/index.html" class="logo">siteo</a>
+            <a href="/index.html" class="back-link">← Torna al sito</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="text-center">Configura il tuo sito (Food & Beverage)</h1>
+            <p class="text-center text-muted">Compila i dati della tua attività. In 2‑3 giorni riceverai l'anteprima gratuita.</p>
+
+            <!-- PROGRESS BAR -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step-indicator" data-step="1"><span>1</span><span class="step-label">Attività</span></div>
+                    <div class="step-indicator" data-step="2"><span>2</span><span class="step-label">Presentazione</span></div>
+                    <div class="step-indicator" data-step="3"><span>3</span><span class="step-label">Menù</span></div>
+                    <div class="step-indicator" data-step="4"><span>4</span><span class="step-label">Orari</span></div>
+                    <div class="step-indicator" data-step="5"><span>5</span><span class="step-label">Galleria</span></div>
+                    <div class="step-indicator" data-step="6"><span>6</span><span class="step-label">Extra/FAQ</span></div>
+                    <div class="step-indicator" data-step="7"><span>7</span><span class="step-label">Riepilogo</span></div>
+                </div>
+            </div>
+
+            <!-- MESSAGGI DI SUCCESSO/ERRORE -->
+            <div id="successMessage" class="success-message hidden">
+                <h2>Richiesta inviata con successo!</h2>
+                <p>Riceverai l'anteprima entro 48‑72 ore. Nessun pagamento richiesto fino ad approvazione.</p>
+                <p class="text-small mt-1">ID richiesta: <strong id="requestId"></strong></p>
+            </div>
+            <div id="errorMessage" class="error-box hidden">
+                <p id="errorText"></p>
+            </div>
+
+            <!-- FORM MULTI-STEP -->
+            <form id="setupForm" enctype="multipart/form-data">
+                <!-- STEP 1 - Dati attività -->
+                <div class="step-panel active" data-step="1">
+                    <h2>📋 Dati dell'attività</h2>
+                    
+                    <div class="form-group">
+                        <label for="business_name" class="required">Nome attività</label>
+                        <input type="text" id="business_name" name="business_name" required placeholder="es. Trattoria da Mario" aria-required="true" aria-describedby="error_business_name">
+                        <div class="error-message" id="error_business_name"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="required">Email di riferimento</label>
+                        <input type="email" id="email" name="email" required placeholder="info@trattoria.it" aria-required="true" aria-describedby="error_email>
+                        <div class="error-message" id="error_email"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="required">Telefono principale</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+39 0461 123456" aria-required="true" aria-describedby="error_phone">
+                        <div class="error-message" id="error_phone"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address" class="required">Indirizzo completo</label>
+                        <input type="text" id="address" name="address" required placeholder="Via Roma 1, 38122 Trento" aria-required="true" aria-describedby="error_address">
+                        <div class="error-message" id="error_address"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city" class="required">Città</label>
+                        <input type="text" id="city" name="city" required placeholder="Trento" aria-required="true" aria-describedby="error_city">
+                        <div class="error-message" id="error_city"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="piva">Partita IVA (opzionale)</label>
+                        <input type="text" id="piva" name="piva" placeholder="01234567890">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="google_maps">Link Google Maps (opzionale)</label>
+                        <input type="url" id="google_maps" name="google_maps" placeholder="https://maps.app.goo.gl/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instagram">Instagram (opzionale)</label>
+                        <input type="url" id="instagram" name="instagram" placeholder="https://instagram.com/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="facebook">Facebook (opzionale)</label>
+                        <input type="url" id="facebook" name="facebook" placeholder="https://facebook.com/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp (numero separato, opzionale)</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" placeholder="+39 333 1234567">
+                    </div>
+
+                    <div class="nav-buttons">
+                        <span></span>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 - Hero e presentazione -->
+                <div class="step-panel" data-step="2">
+                    <h2>✨ Presentazione del locale</h2>
+                    
+                    <div class="form-group">
+                        <label for="hero_title" class="required">Titolo principale (max 70 caratteri)</label>
+                        <input type="text" id="hero_title" name="hero_title" maxlength="70" required placeholder="es. Cucina tradizionale nel cuore di Trento" aria-required="true" aria-describedby="error_hero_title">
+                        <div class="text-small text-muted" id="hero_title_counter">0/70</div>
+                        <div class="error-message" id="error_hero_title"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hero_subtitle">Sottotitolo breve (opzionale)</label>
+                        <input type="text" id="hero_subtitle" name="hero_subtitle" placeholder="es. Da oltre 30 anni">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="required">Descrizione del locale (3-6 frasi)</label>
+                        <textarea id="description" name="description" required placeholder="Parla della tua atmosfera, specialità, filosofia..." aria-required="true" aria-describedby="error_description"></textarea>
+                        <div class="error-message" id="error_description"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="opening_year">Anno di apertura (opzionale)</label>
+                        <input type="text" id="opening_year" name="opening_year" placeholder="es. 1995">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="philosophy">Filosofia / particolarità (opzionale)</label>
+                        <textarea id="philosophy" name="philosophy" placeholder="es. km0, bio, tradizione..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Logo (almeno uno tra logo e foto principale)</label>
+                        <div class="upload-area" id="logo_upload_area">
+                            <input type="file" id="logo_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp">
+                            <p>Clicca o trascina qui il tuo logo</p>
+                            <p class="text-small text-muted">JPG, PNG, WEBP max 3MB</p>
+                        </div>
+                        <div class="preview-grid" id="logo_preview"></div>
+                        <div class="error-message" id="error_logo"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Foto principale (hero)</label>
+                        <div class="upload-area" id="hero_upload_area">
+                            <input type="file" id="hero_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp">
+                            <p>Clicca o trascina qui la foto principale</p>
+                            <p class="text-small text-muted">JPG, PNG, WEBP max 3MB</p>
+                        </div>
+                        <div class="preview-grid" id="hero_preview"></div>
+                        <div class="error-message" id="error_hero_image"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 - Menù (solo foto) -->
+                <div class="step-panel" data-step="3">
+                    <h2>🍝 Carica il tuo menù</h2>
+                    <p class="text-muted">Carica una o più foto del menù (o un PDF). Dev'essere chiaro e leggibile.</p>
+                    
+                    <div class="form-group">
+                        <label class="required">Immagini del menù (almeno 1 foto o PDF)</label>
+                        <div class="upload-area" id="menu_upload_area">
+                            <input type="file" id="menu_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
+                            <p>Clicca o trascina qui le foto del menù</p>
+                            <p class="text-small text-muted">JPG, PNG, WEBP, PDF (max 5 file, 3MB ciascuno)</p>
+                        </div>
+                        <div class="preview-grid" id="menu_preview"></div>
+                        <div class="error-message" id="error_menu"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 4 - Orari e servizi -->
+                <div class="step-panel" data-step="4">
+                    <h2>⏰ Orari e servizi</h2>
+                    
+                    <h3>Orari di apertura</h3>
+                    <div id="orari_container">
+                        <!-- Giorni della settimana -->
+                        <div class="orari-row">
+                            <label>Lunedì</label>
+                            <input type="time" class="orari-apertura" data-day="lunedi_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="lunedi_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="lunedi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="lunedi_note" placeholder="Note (es. cucina chiude alle 14:30)">
+                        </div>
+                        <div class="orari-row">
+                            <label>Martedì</label>
+                            <input type="time" class="orari-apertura" data-day="martedi_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="martedi_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="martedi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="martedi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Mercoledì</label>
+                            <input type="time" class="orari-apertura" data-day="mercoledi_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="mercoledi_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="mercoledi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="mercoledi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Giovedì</label>
+                            <input type="time" class="orari-apertura" data-day="giovedi_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="giovedi_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="giovedi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="giovedi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Venerdì</label>
+                            <input type="time" class="orari-apertura" data-day="venerdi_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="venerdi_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="venerdi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="venerdi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Sabato</label>
+                            <input type="time" class="orari-apertura" data-day="sabato_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="sabato_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="sabato"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="sabato_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Domenica</label>
+                            <input type="time" class="orari-apertura" data-day="domenica_apertura" value="12:00">
+                            <span> - </span>
+                            <input type="time" class="orari-chiusura" data-day="domenica_chiusura" value="15:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="domenica"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="domenica_note" placeholder="Note">
+                        </div>
+                    </div>
+
+                    <h3 class="mt-2">Servizi disponibili</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servizio_prenotazioni_telefoniche" value="1"> Accetta prenotazioni telefoniche
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servizio_prenotazioni_whatsapp" value="1"> Accetta prenotazioni WhatsApp
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servizio_asporto" value="1"> Asporto disponibile
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servizio_domicilio" value="1"> Consegna a domicilio
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenotazioni_link">Link prenotazione esterna (TheFork, ecc.)</label>
+                        <input type="url" id="prenotazioni_link" name="prenotazioni_link" placeholder="https://...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="delivery_link">Link delivery (JustEat, Glovo, ecc.)</label>
+                        <input type="url" id="delivery_link" name="delivery_link" placeholder="https://...">
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 5 - Galleria immagini -->
+                <div class="step-panel" data-step="5">
+                    <h2>🖼️ Galleria del locale</h2>
+                    <p class="text-muted">Carica almeno una foto dell'interno del locale. Massimo 10 immagini in totale.</p>
+
+                    <div class="form-group">
+                        <label class="required">Foto interno locale (almeno 1)</label>
+                        <div class="upload-area" id="interno_upload_area">
+                            <input type="file" id="interno_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp" multiple>
+                            <p>Clicca o trascina le foto dell'interno</p>
+                        </div>
+                        <div class="preview-grid" id="interno_preview"></div>
+                        <div class="error-message" id="error_interno"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Foto piatti (facoltative)</label>
+                        <div class="upload-area" id="piatti_upload_area">
+                            <input type="file" id="piatti_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp" multiple>
+                            <p>Clicca o trascina le foto dei piatti</p>
+                        </div>
+                        <div class="preview-grid" id="piatti_preview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Foto esterno locale (facoltativa)</label>
+                        <div class="upload-area" id="esterno_upload_area">
+                            <input type="file" id="esterno_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp">
+                            <p>Clicca o trascina la foto dell'esterno</p>
+                        </div>
+                        <div class="preview-grid" id="esterno_preview"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 6 - Extra e FAQ (opzionali) -->
+                <div class="step-panel" data-step="6">
+                    <h2>📌 Extra e FAQ</h2>
+                    <p class="text-muted">Sezione facoltativa. Puoi aggiungere informazioni aggiuntive o domande frequenti.</p>
+
+                    <div class="form-group">
+                        <label for="eventi">Eventi settimanali (opzionale)</label>
+                        <textarea id="eventi" name="eventi" placeholder="es. Venerdì sera musica dal vivo, mercoledì happy hour..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="offerte">Offerte attive (opzionale)</label>
+                        <textarea id="offerte" name="offerte" placeholder="es. Pranzo 15€, sconto studenti..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="allergeni">Note allergeni (opzionale)</label>
+                        <textarea id="allergeni" name="allergeni" placeholder="es. Disponibile menù senza glutine..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Carta vini separata (upload foto o PDF, opzionale)</label>
+                        <div class="upload-area" id="carta_vini_upload_area">
+                            <input type="file" id="carta_vini_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,application/pdf">
+                            <p>Clicca o trascina la carta vini</p>
+                        </div>
+                        <div class="preview-grid" id="carta_vini_preview"></div>
+                    </div>
+
+                    <h3>FAQ (domande frequenti)</h3>
+                    <div id="faq_container">
+                        <!-- Le FAQ verranno aggiunte dinamicamente -->
+                    </div>
+                    <button type="button" id="aggiungi_faq" class="btn-add-faq">+ Aggiungi domanda</button>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 7 - Riepilogo e invio -->
+                <div class="step-panel" data-step="7">
+                    <h2>📦 Riepilogo e invio</h2>
+                    <p class="text-muted">Verifica i dati inseriti prima di inviare la richiesta.</p>
+
+                    <div class="riepilogo-box" id="riepilogo"></div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label required">
+                            <input type="checkbox" id="consenso" required>
+                            <span>Confermo che le informazioni fornite sono corrette e accetto che il sito venga pubblicato solo dopo approvazione e pagamento.</span>
+                        </label>
+                        <div class="error-message" id="error_consenso"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="submit" class="btn" id="submitBtn">Invia e ricevi l'anteprima</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 siteo · Configurazione sito Food & Beverage</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // --- STATO GLOBALE ---
+            let currentStep = 1;
+            const totalSteps = 7;
+            let filesData = {
+                logo: null,
+                hero_image: null,
+                menu: [],      // array di File
+                interno: [],
+                piatti: [],
+                esterno: null,
+                carta_vini: null
+            };
+            let faqs = []; // array di {domanda, risposta}
+
+            // --- ELEMENTI DOM ---
+            const stepPanels = document.querySelectorAll('.step-panel');
+            const stepIndicators = document.querySelectorAll('.step-indicator');
+            const form = document.getElementById('setupForm');
+            const riepilogoDiv = document.getElementById('riepilogo');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // --- FUNZIONI AGGIUNTIVE PER UPLOAD ---
+            function setupUpload(areaId, inputId, previewId, multiple = false, fileType = 'image', maxFiles = 5, maxSizeMB = 3, targetKey) {
+                const area = document.getElementById(areaId);
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+                let files = (targetKey === 'menu' || targetKey === 'interno' || targetKey === 'piatti') ? filesData[targetKey] : 
+                            (targetKey === 'logo' ? filesData.logo ? [filesData.logo] : [] :
+                             targetKey === 'hero_image' ? filesData.hero_image ? [filesData.hero_image] : [] :
+                             targetKey === 'esterno' ? filesData.esterno ? [filesData.esterno] : [] :
+                             targetKey === 'carta_vini' ? filesData.carta_vini ? [filesData.carta_vini] : [] : []);
+
+                function updatePreview() {
+                    preview.innerHTML = '';
+                    let fileList = [];
+                    if (targetKey === 'menu' || targetKey === 'interno' || targetKey === 'piatti') {
+                        fileList = filesData[targetKey] || [];
+                    } else {
+                        const single = filesData[targetKey];
+                        if (single) fileList = [single];
+                    }
+                    fileList.forEach((file, index) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const item = document.createElement('div');
+                            item.className = 'preview-item';
+                            if (file.type.startsWith('image/')) {
+                                item.innerHTML = `<img src="${e.target.result}" alt="anteprima"><button class="remove-file" data-key="${targetKey}" data-index="${index}">×</button><div class="file-name">${file.name}</div>`;
+                            } else {
+                                // PDF o altro
+                                item.innerHTML = `<div style="height:80px; display:flex; align-items:center; justify-content:center; background:#f0f0f0;">📄</div><button class="remove-file" data-key="${targetKey}" data-index="${index}">×</button><div class="file-name">${file.name}</div>`;
+                            }
+                            preview.appendChild(item);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    // Aggiungi eventi rimozione
+                    preview.querySelectorAll('.remove-file').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const key = btn.dataset.key;
+                            const idx = btn.dataset.index;
+                            if (key === 'menu' || key === 'interno' || key === 'piatti') {
+                                filesData[key].splice(idx, 1);
+                            } else {
+                                filesData[key] = null;
+                            }
+                            updatePreview();
+                        });
+                    });
+                }
+
+                area.addEventListener('click', () => input.click());
+                area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('dragover'); });
+                area.addEventListener('dragleave', () => area.classList.remove('dragover'));
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('dragover');
+                    const newFiles = Array.from(e.dataTransfer.files);
+                    handleFiles(newFiles);
+                });
+                input.addEventListener('change', (e) => {
+                    const newFiles = Array.from(e.target.files);
+                    handleFiles(newFiles);
+                    input.value = ''; // reset per permettere ricarica stesso file
+                });
+
+                function handleFiles(newFiles) {
+                    // Validazione dimensioni
+                    const validFiles = newFiles.filter(f => f.size <= maxSizeMB * 1024 * 1024);
+                    if (validFiles.length !== newFiles.length) {
+                        alert(`Alcuni file superano il limite di ${maxSizeMB}MB.`);
+                    }
+                    // Se multiplo
+                    if (multiple) {
+                        const current = filesData[targetKey] || [];
+                        if (current.length + validFiles.length > maxFiles) {
+                            alert(`Puoi caricare al massimo ${maxFiles} file.`);
+                            return;
+                        }
+                        filesData[targetKey] = [...current, ...validFiles];
+                    } else {
+                        // Singolo: sostituisci
+                        filesData[targetKey] = validFiles[0] || null;
+                    }
+                    updatePreview();
+                }
+            }
+
+            // Inizializza upload
+            setupUpload('logo_upload_area', 'logo_input', 'logo_preview', false, 'image', 1, 3, 'logo');
+            setupUpload('hero_upload_area', 'hero_input', 'hero_preview', false, 'image', 1, 3, 'hero_image');
+            setupUpload('menu_upload_area', 'menu_input', 'menu_preview', true, 'mixed', 5, 3, 'menu');
+            setupUpload('interno_upload_area', 'interno_input', 'interno_preview', true, 'image', 10, 3, 'interno');
+            setupUpload('piatti_upload_area', 'piatti_input', 'piatti_preview', true, 'image', 10, 3, 'piatti');
+            setupUpload('esterno_upload_area', 'esterno_input', 'esterno_preview', false, 'image', 1, 3, 'esterno');
+            setupUpload('carta_vini_upload_area', 'carta_vini_input', 'carta_vini_preview', false, 'mixed', 1, 3, 'carta_vini');
+
+            // --- FAQ dinamiche ---
+            const faqContainer = document.getElementById('faq_container');
+            document.getElementById('aggiungi_faq').addEventListener('click', () => {
+                const index = faqs.length;
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item';
+                faqItem.innerHTML = `
+                    <button type="button" class="remove-faq" data-index="${index}">×</button>
+                    <div class="form-group">
+                        <label>Domanda</label>
+                        <input type="text" class="faq-domanda" placeholder="es. Fate consegne a domicilio?">
+                    </div>
+                    <div class="form-group">
+                        <label>Risposta</label>
+                        <textarea class="faq-risposta" placeholder="es. Sì, tramite Glovo..."></textarea>
+                    </div>
+                `;
+                faqContainer.appendChild(faqItem);
+                faqs.push({ domanda: '', risposta: '' });
+                // Aggiorna indici
+                updateFaqIndices();
+            });
+
+            function updateFaqIndices() {
+                document.querySelectorAll('.faq-item').forEach((item, idx) => {
+                    item.querySelector('.remove-faq').dataset.index = idx;
+                    const domanda = item.querySelector('.faq-domanda');
+                    const risposta = item.querySelector('.faq-risposta');
+                    domanda.value = faqs[idx]?.domanda || '';
+                    risposta.value = faqs[idx]?.risposta || '';
+                    domanda.addEventListener('input', (e) => { faqs[idx].domanda = e.target.value; });
+                    risposta.addEventListener('input', (e) => { faqs[idx].risposta = e.target.value; });
+                });
+            }
+
+            faqContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-faq')) {
+                    const idx = e.target.dataset.index;
+                    faqs.splice(idx, 1);
+                    e.target.closest('.faq-item').remove();
+                    updateFaqIndices();
+                }
+            });
+
+            // --- NAVIGAZIONE STEP ---
+            function showStep(step) {
+                stepPanels.forEach(p => p.classList.remove('active'));
+                document.querySelector(`.step-panel[data-step="${step}"]`).classList.add('active');
+                stepIndicators.forEach((ind, i) => {
+                    const s = i+1;
+                    ind.classList.remove('active', 'completed');
+                    if (s === step) ind.classList.add('active');
+                    else if (s < step) ind.classList.add('completed');
+                });
+                currentStep = step;
+                if (step === 7) generateRiepilogo();
+            }
+
+            function validateStep(step) {
+                // Semplificato: per ora controlla solo i required basilari e i file necessari
+                if (step === 1) {
+                    const name = document.getElementById('business_name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const address = document.getElementById('address').value.trim();
+                    const city = document.getElementById('city').value.trim();
+                    if (!name) { showError('business_name', 'Campo obbligatorio'); return false; }
+                    if (!email || !/^\S+@\S+\.\S+$/.test(email)) { showError('email', 'Email non valida'); return false; }
+                    if (!phone) { showError('phone', 'Campo obbligatorio'); return false; }
+                    if (!address) { showError('address', 'Campo obbligatorio'); return false; }
+                    if (!city) { showError('city', 'Campo obbligatorio'); return false; }
+                }
+                if (step === 2) {
+                    const title = document.getElementById('hero_title').value.trim();
+                    const desc = document.getElementById('description').value.trim();
+                    if (!title) { showError('hero_title', 'Campo obbligatorio'); return false; }
+                    if (!desc) { showError('description', 'Campo obbligatorio'); return false; }
+                    // Almeno un file tra logo e hero_image
+                    if (!filesData.logo && !filesData.hero_image) {
+                        alert('Devi caricare almeno il logo o la foto principale.');
+                        return false;
+                    }
+                }
+                if (step === 3) {
+                    if (!filesData.menu || filesData.menu.length === 0) {
+                        alert('Devi caricare almeno un\'immagine o PDF del menù.');
+                        return false;
+                    }
+                }
+                if (step === 5) {
+                    if (!filesData.interno || filesData.interno.length === 0) {
+                        alert('Devi caricare almeno una foto dell\'interno.');
+                        return false;
+                    }
+                }
+                // reset errori
+                document.querySelectorAll('.error-message').forEach(e => e.textContent = '');
+                return true;
+            }
+
+            function showError(fieldId, msg) {
+                const errorEl = document.getElementById('error_' + fieldId);
+                if (errorEl) errorEl.textContent = msg;
+            }
+
+            document.querySelectorAll('.next-step').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (validateStep(currentStep)) {
+                        if (currentStep < totalSteps) showStep(currentStep + 1);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.prev-step').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentStep > 1) showStep(currentStep - 1);
+                });
+            });
+
+            // --- GENERAZIONE RIEPILOGO ---
+            function generateRiepilogo() {
+                const data = {
+                    business_name: document.getElementById('business_name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    hero_title: document.getElementById('hero_title').value,
+                    description: document.getElementById('description').value,
+                    // ... altri campi testo
+                };
+                let html = '<div class="riepilogo-section"><h3>Attività</h3>';
+                html += `<p><strong>Nome:</strong> ${data.business_name}</p>`;
+                html += `<p><strong>Email:</strong> ${data.email}</p>`;
+                html += `<p><strong>Telefono:</strong> ${data.phone}</p>`;
+                html += `<p><strong>Indirizzo:</strong> ${data.address}, ${data.city}</p>`;
+                html += '</div>';
+
+                html += '<div class="riepilogo-section"><h3>Immagini caricate</h3>';
+                html += `<p>Logo: ${filesData.logo ? '✓' : '✗'}</p>`;
+                html += `<p>Foto principale: ${filesData.hero_image ? '✓' : '✗'}</p>`;
+                html += `<p>Menù: ${filesData.menu ? filesData.menu.length + ' file' : '0'}</p>`;
+                html += `<p>Foto interno: ${filesData.interno ? filesData.interno.length + ' file' : '0'}</p>`;
+                html += '</div>';
+
+                if (faqs.length > 0) {
+                    html += '<div class="riepilogo-section"><h3>FAQ</h3>';
+                    faqs.forEach((faq, i) => {
+                        html += `<p><strong>Q${i+1}:</strong> ${faq.domanda || '(vuota)'}<br><strong>R:</strong> ${faq.risposta || '(vuota)'}</p>`;
+                    });
+                    html += '</div>';
+                }
+
+                riepilogoDiv.innerHTML = html;
+            }
+
+            // --- INVIO FORM (simulato) ---
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!document.getElementById('consenso').checked) {
+                    document.getElementById('error_consenso').textContent = 'Devi accettare il consenso.';
+                    return;
+                }
+                // Validazioni finali (già fatte a step)
+                // Raccolta dati in FormData
+                const formData = new FormData();
+                // Aggiungi tutti i campi input
+                const inputs = form.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox' && input.name) {
+                        if (input.checked) formData.append(input.name, input.value);
+                    } else if (input.name) {
+                        formData.append(input.name, input.value);
+                    }
+                });
+
+                // Aggiungi file
+                if (filesData.logo) formData.append('logo', filesData.logo);
+                if (filesData.hero_image) formData.append('hero_image', filesData.hero_image);
+                filesData.menu.forEach((f, i) => formData.append(`menu_${i}`, f));
+                filesData.interno.forEach((f, i) => formData.append(`interno_${i}`, f));
+                filesData.piatti.forEach((f, i) => formData.append(`piatti_${i}`, f));
+                if (filesData.esterno) formData.append('esterno', filesData.esterno);
+                if (filesData.carta_vini) formData.append('carta_vini', filesData.carta_vini);
+
+                // Aggiungi FAQ come JSON
+                formData.append('faqs', JSON.stringify(faqs));
+
+                // Aggiungi orari (costruisci oggetto)
+                const orari = {};
+                document.querySelectorAll('.orari-row').forEach(row => {
+                    const day = row.querySelector('label')?.innerText.trim().toLowerCase();
+                    const apertura = row.querySelector('.orari-apertura')?.value;
+                    const chiusura = row.querySelector('.orari-chiusura')?.value;
+                    const chiuso = row.querySelector('.orari-chiuso')?.checked;
+                    const note = row.querySelector('.orari-note')?.value;
+                    orari[day] = { apertura, chiusura, chiuso, note };
+                });
+                formData.append('orari', JSON.stringify(orari));
+
+                // Disabilita bottone
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-loading');
+
+                try {
+                    // Simula chiamata API (sostituire con URL reale)
+                    const response = await fetch(import.meta.env.VITE_FORM_ENDPOINT, {
+                    method: 'POST',
+                    body: formData
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        // Mostra successo
+                        form.classList.add('hidden');
+                        document.getElementById('requestId').textContent = data.id || 'R123456';
+                        successMsg.classList.remove('hidden');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        throw new Error(data.error || 'Errore invio');
+                    }
+                } catch (err) {
+                    document.getElementById('errorText').textContent = err.message;
+                    errorMsg.classList.remove('hidden');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('btn-loading');
+                }
+            });
+
+            // Inizializza caratteri contatore
+            const heroTitle = document.getElementById('hero_title');
+            heroTitle.addEventListener('input', () => {
+                document.getElementById('hero_title_counter').textContent = `${heroTitle.value.length}/70`;
+            });
+        })();
+    </script>
+</body>
+</html>

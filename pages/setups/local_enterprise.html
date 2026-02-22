@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>siteo · Configura il tuo sito (Impresa locale)</title>
+    <link rel="icon" type="image/png" href="/assets/img/fav.png">
+    <link rel="stylesheet" href="/src/css/main.css">
+    <link rel="stylesheet" href="/src/css/forms.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="/index.html" class="logo">siteo</a>
+            <a href="/index.html" class="back-link">← Torna al sito</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="text-center">Configura il tuo sito (Impresa locale / Professionista)</h1>
+            <p class="text-center text-muted">Compila i dati della tua attività. In 2‑3 giorni riceverai l'anteprima gratuita.</p>
+
+            <!-- PROGRESS BAR (11 step) -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step-indicator" data-step="1"><span>1</span><span class="step-label">Tipo</span></div>
+                    <div class="step-indicator" data-step="2"><span>2</span><span class="step-label">Dati</span></div>
+                    <div class="step-indicator" data-step="3"><span>3</span><span class="step-label">Hero</span></div>
+                    <div class="step-indicator" data-step="4"><span>4</span><span class="step-label">Servizi</span></div>
+                    <div class="step-indicator" data-step="5"><span>5</span><span class="step-label">Portfolio</span></div>
+                    <div class="step-indicator" data-step="6"><span>6</span><span class="step-label">Contatti</span></div>
+                    <div class="step-indicator" data-step="7"><span>7</span><span class="step-label">Certificaz.</span></div>
+                    <div class="step-indicator" data-step="8"><span>8</span><span class="step-label">Galleria</span></div>
+                    <div class="step-indicator" data-step="9"><span>9</span><span class="step-label">Testimonianze</span></div>
+                    <div class="step-indicator" data-step="10"><span>10</span><span class="step-label">Dominio</span></div>
+                    <div class="step-indicator" data-step="11"><span>11</span><span class="step-label">Riepilogo</span></div>
+                </div>
+            </div>
+
+            <!-- MESSAGGI DI RISULTATO -->
+            <div id="successMessage" class="success-message hidden">
+                <h2>Richiesta inviata con successo!</h2>
+                <p>Riceverai l'anteprima entro 48‑72 ore. Nessun pagamento richiesto fino ad approvazione.</p>
+                <p class="text-small mt-1">ID richiesta: <strong id="requestId"></strong></p>
+            </div>
+            <div id="errorMessage" class="error-box hidden">
+                <p id="errorText"></p>
+            </div>
+
+            <!-- FORM PRINCIPALE -->
+            <form id="setupForm" enctype="multipart/form-data">
+                <!-- STEP 1 - Sottocategoria -->
+                <div class="step-panel active" data-step="1">
+                    <h2>🔧 Scegli la tua categoria</h2>
+                    <div class="form-group">
+                        <label for="subtype" class="required">Tipologia di attività</label>
+                        <select id="subtype" name="subtype" required>
+                            <option value="">Seleziona</option>
+                            <option value="idraulico">Idraulico</option>
+                            <option value="elettricista">Elettricista</option>
+                            <option value="falegname">Falegname</option>
+                            <option value="impresa_edile">Impresa edile</option>
+                            <option value="officina">Officina meccanica</option>
+                            <option value="traslochi">Traslochi</option>
+                            <option value="altro">Altro</option>
+                        </select>
+                        <div class="error-message" id="error_subtype"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <span></span>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 - Dati attività -->
+                <div class="step-panel" data-step="2">
+                    <h2>📋 Dati dell'attività</h2>
+                    <div class="form-group">
+                        <label for="business_name" class="required">Nome attività</label>
+                        <input type="text" id="business_name" name="business_name" required>
+                        <div class="error-message" id="error_business_name"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="primary_email" class="required">Email di riferimento</label>
+                        <input type="email" id="primary_email" name="primary_email" required>
+                        <div class="error-message" id="error_primary_email"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="primary_phone">Telefono principale (consigliato)</label>
+                        <input type="tel" id="primary_phone" name="primary_phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Indirizzo completo (via, città, CAP) - consigliato</label>
+                        <input type="text" id="address" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="vat_number">Partita IVA / Codice fiscale (opzionale)</label>
+                        <input type="text" id="vat_number" name="vat_number">
+                    </div>
+                    <div class="form-group">
+                        <label for="tagline">Breve tagline (es. "Da 20 anni a servizio di ...")</label>
+                        <input type="text" id="tagline" name="tagline">
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 - Hero & Presentazione -->
+                <div class="step-panel" data-step="3">
+                    <h2>✨ Hero e presentazione</h2>
+                    <div class="form-group">
+                        <label for="hero_title" class="required">Titolo principale (max 70 caratteri)</label>
+                        <input type="text" id="hero_title" name="hero_title" maxlength="70" required>
+                        <div class="text-small text-muted" id="hero_title_counter">0/70</div>
+                        <div class="error-message" id="error_hero_title"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hero_subtitle">Sottotitolo (max 160 caratteri, opzionale)</label>
+                        <input type="text" id="hero_subtitle" name="hero_subtitle" maxlength="160">
+                    </div>
+                    <div class="form-group">
+                        <label for="hero_cta">Testo del bottone CTA (es. "Chiamaci ora")</label>
+                        <input type="text" id="hero_cta" name="hero_cta" value="Richiedi preventivo">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo (opzionale, consigliato) - SVG/PNG, max 2MB</label>
+                        <div class="upload-area" id="logo_upload_area">
+                            <input type="file" id="logo_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,image/svg+xml">
+                            <p>Clicca o trascina il tuo logo</p>
+                        </div>
+                        <div class="preview-grid" id="logo_preview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Foto principale (almeno una immagine richiesta: lavoro, mezzo, officina)</label>
+                        <div class="upload-area" id="hero_image_upload_area">
+                            <input type="file" id="hero_image_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp">
+                            <p>Clicca o trascina la foto principale (min 1200x675, max 3MB)</p>
+                        </div>
+                        <div class="preview-grid" id="hero_image_preview"></div>
+                        <div class="error-message" id="error_hero_image"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 4 - Servizi (almeno 1) -->
+                <div class="step-panel" data-step="4">
+                    <h2>🔨 Servizi offerti</h2>
+                    <p class="text-muted">Inserisci almeno un servizio. Puoi aggiungerne quanti ne vuoi.</p>
+                    <div id="services_container"></div>
+                    <button type="button" id="aggiungi_servizio" class="btn-add-item">+ Aggiungi servizio</button>
+                    <div class="error-message" id="error_services"></div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 5 - Portfolio / Lavori -->
+                <div class="step-panel" data-step="5">
+                    <h2>📁 Portfolio lavori (consigliato)</h2>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="portfolio_enabled" name="portfolio_enabled" checked> Abilita sezione portfolio
+                        </label>
+                    </div>
+                    <div id="portfolio_section">
+                        <p class="text-muted">Aggiungi i tuoi lavori più significativi.</p>
+                        <div id="portfolio_container"></div>
+                        <button type="button" id="aggiungi_portfolio" class="btn-add-item">+ Aggiungi lavoro</button>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 6 - Contatti e Orari -->
+                <div class="step-panel" data-step="6">
+                    <h2>📞 Contatti e orari</h2>
+                    <div class="form-group">
+                        <label for="contact_phone_public">Telefono pubblico (consigliato)</label>
+                        <input type="tel" id="contact_phone_public" name="contact_phone_public">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_email_public">Email pubblica (opzionale)</label>
+                        <input type="email" id="contact_email_public" name="contact_email_public">
+                    </div>
+                    <div class="form-group">
+                        <label for="service_area">Zone servite (es. Milano e provincia)</label>
+                        <input type="text" id="service_area" name="service_area">
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="emergency_24_7" name="emergency_24_7"> Servizio emergenza 24/7
+                        </label>
+                    </div>
+                    <div class="form-group" id="emergency_phone_group" style="display: none;">
+                        <label for="emergency_phone">Numero per emergenze</label>
+                        <input type="tel" id="emergency_phone" name="emergency_phone">
+                    </div>
+
+                    <h3 class="mt-2">Orari di apertura</h3>
+                    <button type="button" id="copyOrariBtn" class="copy-orari-btn">Copia orario feriali su sab/dom</button>
+                    <div id="orari_container">
+                        <!-- Generati con JS? meglio scriverli statici per semplicità -->
+                        <div class="orari-row">
+                            <label>Lunedì</label>
+                            <input type="time" class="orari-apertura" data-day="lunedi_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="lunedi_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="lunedi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="lunedi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Martedì</label>
+                            <input type="time" class="orari-apertura" data-day="martedi_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="martedi_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="martedi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="martedi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Mercoledì</label>
+                            <input type="time" class="orari-apertura" data-day="mercoledi_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="mercoledi_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="mercoledi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="mercoledi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Giovedì</label>
+                            <input type="time" class="orari-apertura" data-day="giovedi_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="giovedi_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="giovedi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="giovedi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Venerdì</label>
+                            <input type="time" class="orari-apertura" data-day="venerdi_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="venerdi_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="venerdi"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="venerdi_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Sabato</label>
+                            <input type="time" class="orari-apertura" data-day="sabato_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="sabato_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="sabato"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="sabato_note" placeholder="Note">
+                        </div>
+                        <div class="orari-row">
+                            <label>Domenica</label>
+                            <input type="time" class="orari-apertura" data-day="domenica_apertura" value="09:00">
+                            <span>-</span>
+                            <input type="time" class="orari-chiusura" data-day="domenica_chiusura" value="18:00">
+                            <label><input type="checkbox" class="orari-chiuso" data-day="domenica"> Chiuso</label>
+                            <input type="text" class="orari-note" data-day="domenica_note" placeholder="Note">
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 7 - Certificazioni & Garanzie -->
+                <div class="step-panel" data-step="7">
+                    <h2>📜 Certificazioni e garanzie (opzionali)</h2>
+                    <div class="form-group">
+                        <label for="warranty_info">Informazioni sulla garanzia (es. "Garanzia 12 mesi su tutti gli interventi")</label>
+                        <textarea id="warranty_info" name="warranty_info"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Certificazioni (carica file PDF o immagini)</label>
+                        <div class="upload-area" id="certifications_upload_area">
+                            <input type="file" id="certifications_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,application/pdf" multiple>
+                            <p>Clicca o trascina i file delle certificazioni (max 5 file, 3MB ciascuno)</p>
+                        </div>
+                        <div class="preview-grid" id="certifications_preview"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 8 - Galleria immagini -->
+                <div class="step-panel" data-step="8">
+                    <h2>🖼️ Galleria immagini (consigliata per qualità)</h2>
+                    <p class="text-muted">Carica foto dei tuoi lavori, mezzi, squadra. Massimo 10 immagini, 3MB ciascuna.</p>
+                    <div class="form-group">
+                        <div class="upload-area" id="gallery_upload_area">
+                            <input type="file" id="gallery_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp" multiple>
+                            <p>Clicca o trascina le foto</p>
+                        </div>
+                        <div class="preview-grid" id="gallery_preview"></div>
+                        <div class="error-message" id="error_gallery"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 9 - Testimonianze (opzionali) -->
+                <div class="step-panel" data-step="9">
+                    <h2>🗣️ Testimonianze (opzionali)</h2>
+                    <div id="testimonials_container"></div>
+                    <button type="button" id="aggiungi_testimonianza" class="btn-add-item">+ Aggiungi testimonianza</button>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 10 - Dominio e pubblicazione -->
+                <div class="step-panel" data-step="10">
+                    <h2>🌐 Dominio e pubblicazione</h2>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="want_domain_management" name="want_domain_management" checked> Desidero che siteo gestisca il dominio per me
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferred_domain">Dominio desiderato (es. miariparazioni.it) - opzionale</label>
+                        <input type="text" id="preferred_domain" name="preferred_domain" placeholder="es. miariparazioni.it">
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="already_have_domain" name="already_have_domain"> Ho già un dominio
+                        </label>
+                    </div>
+                    <div class="form-group" id="existing_domain_instruction" style="display: none;">
+                        <label for="domain_instructions">Indica il dominio che hai e eventuali istruzioni</label>
+                        <textarea id="domain_instructions" name="domain_instructions" placeholder="es. dominio già registrato su Aruba, devo trasferirlo"></textarea>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="button" class="btn next-step">Avanti</button>
+                    </div>
+                </div>
+
+                <!-- STEP 11 - Riepilogo e consenso -->
+                <div class="step-panel" data-step="11">
+                    <h2>📋 Riepilogo e invio</h2>
+                    <div class="riepilogo-box" id="riepilogo"></div>
+                    <div class="form-group">
+                        <label class="checkbox-label required">
+                            <input type="checkbox" id="consenso" required>
+                            <span>Confermo che le informazioni fornite sono corrette e autorizzo la pubblicazione dopo approvazione e pagamento.</span>
+                        </label>
+                        <div class="error-message" id="error_consenso"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <button type="submit" class="btn" id="submitBtn">Mostrami l'anteprima in 3 giorni</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 siteo · Configurazione Impresa locale / Professionista</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // ---------- STATO GLOBALE ----------
+            let currentStep = 1;
+            const totalSteps = 11;
+
+            // Archivi file (globali)
+            let filesData = {
+                logo: null,
+                hero_image: null,
+                portfolio_images: {},  // oggetto con chiave = indice portfolio, valore array di File
+                certifications: [],    // array di File
+                gallery: []            // array di File
+            };
+
+            // Dati dinamici
+            let services = [];               // array di oggetti servizio
+            let portfolio = [];               // array di oggetti portfolio (con immagini)
+            let testimonials = [];             // array di oggetti testimonianza
+            let certificationsFiles = [];      // alias per filesData.certifications
+            let galleryFiles = [];              // alias per filesData.gallery
+
+            // Elementi DOM
+            const stepPanels = document.querySelectorAll('.step-panel');
+            const stepIndicators = document.querySelectorAll('.step-indicator');
+            const form = document.getElementById('setupForm');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // ---------- FUNZIONI DI NAVIGAZIONE ----------
+            function showStep(step) {
+                stepPanels.forEach(p => p.classList.remove('active'));
+                document.querySelector(`.step-panel[data-step="${step}"]`).classList.add('active');
+                stepIndicators.forEach((ind, i) => {
+                    const s = i+1;
+                    ind.classList.remove('active', 'completed');
+                    if (s === step) ind.classList.add('active');
+                    else if (s < step) ind.classList.add('completed');
+                });
+                currentStep = step;
+                if (step === 11) generateRiepilogo();
+            }
+
+            function showError(fieldId, msg) {
+                const err = document.getElementById('error_' + fieldId);
+                if (err) err.textContent = msg;
+            }
+
+            function clearErrors() {
+                document.querySelectorAll('.error-message').forEach(e => e.textContent = '');
+            }
+
+            // ---------- VALIDAZIONE STEP ----------
+            function validateStep(step) {
+                clearErrors();
+                if (step === 1) {
+                    if (!document.getElementById('subtype').value) {
+                        showError('subtype', 'Seleziona una categoria');
+                        return false;
+                    }
+                }
+                if (step === 2) {
+                    const name = document.getElementById('business_name').value.trim();
+                    const email = document.getElementById('primary_email').value.trim();
+                    if (!name) { showError('business_name', 'Campo obbligatorio'); return false; }
+                    if (!email || !/^\S+@\S+\.\S+$/.test(email)) { showError('primary_email', 'Email non valida'); return false; }
+                }
+                if (step === 3) {
+                    const title = document.getElementById('hero_title').value.trim();
+                    if (!title) { showError('hero_title', 'Campo obbligatorio'); return false; }
+                    if (!filesData.hero_image) { showError('hero_image', 'Devi caricare almeno una foto principale'); return false; }
+                }
+                if (step === 4) {
+                    if (services.length === 0) {
+                        document.getElementById('error_services').textContent = 'Devi inserire almeno un servizio';
+                        return false;
+                    }
+                    for (let i=0; i<services.length; i++) {
+                        if (!services[i].name || !services[i].desc) {
+                            alert(`Il servizio ${i+1} è incompleto (nome e descrizione obbligatori)`);
+                            return false;
+                        }
+                    }
+                }
+                if (step === 5) {
+                    const enabled = document.getElementById('portfolio_enabled').checked;
+                    if (enabled && portfolio.length === 0) {
+                        alert('Se la sezione portfolio è abilitata, devi inserire almeno un lavoro.');
+                        return false;
+                    }
+                    if (enabled) {
+                        for (let i=0; i<portfolio.length; i++) {
+                            if (!portfolio[i].title || !portfolio[i].desc) {
+                                alert(`Il portfolio ${i+1} è incompleto (titolo e descrizione obbligatori)`);
+                                return false;
+                            }
+                        }
+                    }
+                }
+                if (step === 6) {
+                    // Nessuna validazione bloccante
+                }
+                if (step === 7) {
+                    // Opzionale
+                }
+                if (step === 8) {
+                    // Galleria opzionale (ma consigliata)
+                }
+                if (step === 9) {
+                    // Testimonianze opzionali
+                }
+                if (step === 10) {
+                    // Dominio opzionale
+                }
+                return true;
+            }
+
+            // ---------- FUNZIONI UPLOAD (generiche) ----------
+            function setupUpload(areaId, inputId, previewId, multiple = false, accept = 'image/*', maxSizeMB = 3, maxFiles = 10, targetKey, portfolioIndex = null) {
+                const area = document.getElementById(areaId);
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+                if (!area || !input || !preview) return;
+
+                function getFiles() {
+                    if (targetKey === 'gallery') return filesData.gallery;
+                    if (targetKey === 'certifications') return filesData.certifications;
+                    if (targetKey === 'logo') return filesData.logo ? [filesData.logo] : [];
+                    if (targetKey === 'hero_image') return filesData.hero_image ? [filesData.hero_image] : [];
+                    if (targetKey === 'portfolio' && portfolioIndex !== null) {
+                        return filesData.portfolio_images[portfolioIndex] || [];
+                    }
+                    return [];
+                }
+
+                function setFiles(newFiles) {
+                    if (targetKey === 'gallery') filesData.gallery = newFiles;
+                    else if (targetKey === 'certifications') filesData.certifications = newFiles;
+                    else if (targetKey === 'logo') filesData.logo = newFiles[0] || null;
+                    else if (targetKey === 'hero_image') filesData.hero_image = newFiles[0] || null;
+                    else if (targetKey === 'portfolio' && portfolioIndex !== null) {
+                        filesData.portfolio_images[portfolioIndex] = newFiles;
+                    }
+                    updatePreview();
+                }
+
+                function updatePreview() {
+                    preview.innerHTML = '';
+                    const fileList = getFiles();
+                    fileList.forEach((file, idx) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const item = document.createElement('div');
+                            item.className = 'preview-item';
+                            if (file.type.startsWith('image/')) {
+                                item.innerHTML = `<img src="${e.target.result}" alt="anteprima"><button class="remove-file" data-index="${idx}">×</button><div class="file-name">${file.name}</div>`;
+                            } else {
+                                item.innerHTML = `<div style="height:80px; display:flex; align-items:center; justify-content:center; background:#f0f0f0;">📄</div><button class="remove-file" data-index="${idx}">×</button><div class="file-name">${file.name}</div>`;
+                            }
+                            preview.appendChild(item);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    // Gestione rimozione
+                    preview.querySelectorAll('.remove-file').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const idx = btn.dataset.index;
+                            let current = getFiles();
+                            current.splice(idx, 1);
+                            setFiles(current);
+                        });
+                    });
+                }
+
+                area.addEventListener('click', () => input.click());
+                area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('dragover'); });
+                area.addEventListener('dragleave', () => area.classList.remove('dragover'));
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('dragover');
+                    const newFiles = Array.from(e.dataTransfer.files);
+                    handleFiles(newFiles);
+                });
+                input.addEventListener('change', (e) => {
+                    const newFiles = Array.from(e.target.files);
+                    handleFiles(newFiles);
+                    input.value = '';
+                });
+
+                function handleFiles(newFiles) {
+                    const valid = newFiles.filter(f => f.size <= maxSizeMB * 1024 * 1024);
+                    if (valid.length !== newFiles.length) {
+                        alert(`Alcuni file superano il limite di ${maxSizeMB}MB.`);
+                    }
+                    if (multiple) {
+                        let current = getFiles();
+                        if (current.length + valid.length > maxFiles) {
+                            alert(`Massimo ${maxFiles} file.`);
+                            return;
+                        }
+                        setFiles([...current, ...valid]);
+                    } else {
+                        if (valid.length > 0) setFiles([valid[0]]);
+                    }
+                }
+            }
+
+            // Inizializza upload statici
+            setupUpload('logo_upload_area', 'logo_input', 'logo_preview', false, 'image/*', 2, 1, 'logo');
+            setupUpload('hero_image_upload_area', 'hero_image_input', 'hero_image_preview', false, 'image/*', 3, 1, 'hero_image');
+            setupUpload('gallery_upload_area', 'gallery_input', 'gallery_preview', true, 'image/*', 3, 10, 'gallery');
+            setupUpload('certifications_upload_area', 'certifications_input', 'certifications_preview', true, '*/*', 3, 5, 'certifications');
+
+            // ---------- SERVIZI ----------
+            function renderServices() {
+                const container = document.getElementById('services_container');
+                container.innerHTML = '';
+                services.forEach((s, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'repeatable-item';
+                    div.innerHTML = `
+                        <button type="button" class="remove-item" data-index="${idx}">×</button>
+                        <div class="form-group">
+                            <label>Nome servizio *</label>
+                            <input type="text" class="service-name" data-index="${idx}" value="${s.name || ''}" placeholder="es. Riparazione idraulica">
+                        </div>
+                        <div class="form-group">
+                            <label>Breve descrizione *</label>
+                            <textarea class="service-desc" data-index="${idx}" placeholder="es. Intervento rapido con preventivo gratuito">${s.desc || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Nota sul prezzo (opzionale, es. 'preventivo gratuito')</label>
+                            <input type="text" class="service-price" data-index="${idx}" value="${s.price || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Area di servizio (es. raggio km)</label>
+                            <input type="text" class="service-area" data-index="${idx}" value="${s.area || ''}">
+                        </div>
+                        <div class="checkbox-label">
+                            <input type="checkbox" class="service-featured" data-index="${idx}" ${s.featured ? 'checked' : ''}> Evidenzia questo servizio
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+                attachServiceEvents();
+            }
+
+            function attachServiceEvents() {
+                document.querySelectorAll('.service-name').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        services[idx].name = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.service-desc').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        services[idx].desc = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.service-price').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        services[idx].price = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.service-area').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        services[idx].area = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.service-featured').forEach(inp => {
+                    inp.addEventListener('change', (e) => {
+                        const idx = e.target.dataset.index;
+                        services[idx].featured = e.target.checked;
+                    });
+                });
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = e.target.dataset.index;
+                        services.splice(idx, 1);
+                        renderServices();
+                    });
+                });
+            }
+
+            document.getElementById('aggiungi_servizio').addEventListener('click', () => {
+                services.push({ name: '', desc: '', price: '', area: '', featured: false });
+                renderServices();
+            });
+
+            // ---------- PORTFOLIO ----------
+            function renderPortfolio() {
+                const container = document.getElementById('portfolio_container');
+                container.innerHTML = '';
+                portfolio.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'repeatable-item';
+                    div.innerHTML = `
+                        <button type="button" class="remove-item" data-index="${idx}">×</button>
+                        <div class="form-group">
+                            <label>Titolo lavoro *</label>
+                            <input type="text" class="portfolio-title" data-index="${idx}" value="${item.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Descrizione breve *</label>
+                            <textarea class="portfolio-desc" data-index="${idx}">${item.desc || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Immagini (1-4, max 3MB ciascuna)</label>
+                            <div class="upload-area" id="portfolio_upload_${idx}">
+                                <input type="file" id="portfolio_input_${idx}" class="file-input-hidden" accept="image/jpeg,image/png,image/webp" multiple>
+                                <p>Clicca o trascina le immagini</p>
+                            </div>
+                            <div class="preview-grid" id="portfolio_preview_${idx}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Data (opzionale)</label>
+                            <input type="text" class="portfolio-date" data-index="${idx}" value="${item.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Luogo (opzionale)</label>
+                            <input type="text" class="portfolio-location" data-index="${idx}" value="${item.location || ''}">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                    // Setup upload per questo portfolio
+                    setupUpload(`portfolio_upload_${idx}`, `portfolio_input_${idx}`, `portfolio_preview_${idx}`, true, 'image/*', 3, 4, 'portfolio', idx);
+                    // Pre-carica eventuali immagini già presenti
+                    if (filesData.portfolio_images[idx]) {
+                        // Forza aggiornamento preview
+                        setTimeout(() => {
+                            const ev = new Event('dummy');
+                            document.getElementById(`portfolio_upload_${idx}`).dispatchEvent(ev);
+                        }, 100);
+                    }
+                });
+                attachPortfolioEvents();
+            }
+
+            function attachPortfolioEvents() {
+                document.querySelectorAll('.portfolio-title').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        portfolio[idx].title = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.portfolio-desc').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        portfolio[idx].desc = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.portfolio-date').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        portfolio[idx].date = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.portfolio-location').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        portfolio[idx].location = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = e.target.dataset.index;
+                        portfolio.splice(idx, 1);
+                        // Aggiorna anche filesData.portfolio_images
+                        const newImages = {};
+                        Object.keys(filesData.portfolio_images).forEach(key => {
+                            const k = parseInt(key);
+                            if (k < idx) newImages[k] = filesData.portfolio_images[k];
+                            else if (k > idx) newImages[k-1] = filesData.portfolio_images[k];
+                        });
+                        filesData.portfolio_images = newImages;
+                        renderPortfolio();
+                    });
+                });
+            }
+
+            document.getElementById('aggiungi_portfolio').addEventListener('click', () => {
+                portfolio.push({ title: '', desc: '', date: '', location: '' });
+                renderPortfolio();
+            });
+
+            // Toggle portfolio enabled
+            const portfolioEnabled = document.getElementById('portfolio_enabled');
+            const portfolioSection = document.getElementById('portfolio_section');
+            portfolioEnabled.addEventListener('change', () => {
+                if (portfolioEnabled.checked) {
+                    portfolioSection.style.display = 'block';
+                } else {
+                    portfolioSection.style.display = 'none';
+                }
+            });
+
+            // ---------- TESTIMONIANZE ----------
+            function renderTestimonials() {
+                const container = document.getElementById('testimonials_container');
+                container.innerHTML = '';
+                testimonials.forEach((t, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'repeatable-item';
+                    div.innerHTML = `
+                        <button type="button" class="remove-item" data-index="${idx}">×</button>
+                        <div class="form-group">
+                            <label>Testo *</label>
+                            <textarea class="testimonial-text" data-index="${idx}">${t.text || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Autore *</label>
+                            <input type="text" class="testimonial-author" data-index="${idx}" value="${t.author || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Fonte (es. Google, Facebook) - opzionale</label>
+                            <input type="text" class="testimonial-source" data-index="${idx}" value="${t.source || ''}">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+                attachTestimonialEvents();
+            }
+
+            function attachTestimonialEvents() {
+                document.querySelectorAll('.testimonial-text').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        testimonials[idx].text = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.testimonial-author').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        testimonials[idx].author = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.testimonial-source').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const idx = e.target.dataset.index;
+                        testimonials[idx].source = e.target.value;
+                    });
+                });
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = e.target.dataset.index;
+                        testimonials.splice(idx, 1);
+                        renderTestimonials();
+                    });
+                });
+            }
+
+            document.getElementById('aggiungi_testimonianza').addEventListener('click', () => {
+                testimonials.push({ text: '', author: '', source: '' });
+                renderTestimonials();
+            });
+
+            // ---------- ORARI: copia feriali ----------
+            document.getElementById('copyOrariBtn').addEventListener('click', () => {
+                const lunA = document.querySelector('.orari-apertura[data-day="lunedi_apertura"]')?.value;
+                const lunC = document.querySelector('.orari-chiusura[data-day="lunedi_chiusura"]')?.value;
+                const lunChiuso = document.querySelector('.orari-chiuso[data-day="lunedi"]')?.checked;
+                const sabA = document.querySelector('.orari-apertura[data-day="sabato_apertura"]');
+                const sabC = document.querySelector('.orari-chiusura[data-day="sabato_chiusura"]');
+                const sabChiuso = document.querySelector('.orari-chiuso[data-day="sabato"]');
+                const domA = document.querySelector('.orari-apertura[data-day="domenica_apertura"]');
+                const domC = document.querySelector('.orari-chiusura[data-day="domenica_chiusura"]');
+                const domChiuso = document.querySelector('.orari-chiuso[data-day="domenica"]');
+                if (sabA) sabA.value = lunA || '';
+                if (sabC) sabC.value = lunC || '';
+                if (sabChiuso) sabChiuso.checked = !!lunChiuso;
+                if (domA) domA.value = lunA || '';
+                if (domC) domC.value = lunC || '';
+                if (domChiuso) domChiuso.checked = !!lunChiuso;
+            });
+
+            // ---------- EMERGENZA ----------
+            const emergencyCheck = document.getElementById('emergency_24_7');
+            const emergencyPhoneGroup = document.getElementById('emergency_phone_group');
+            emergencyCheck.addEventListener('change', () => {
+                emergencyPhoneGroup.style.display = emergencyCheck.checked ? 'block' : 'none';
+            });
+
+            // ---------- DOMINIO GIA' POSSEDUTO ----------
+            const alreadyDomain = document.getElementById('already_have_domain');
+            const domainInstructions = document.getElementById('existing_domain_instruction');
+            alreadyDomain.addEventListener('change', () => {
+                domainInstructions.style.display = alreadyDomain.checked ? 'block' : 'none';
+            });
+
+            // ---------- CONTATORE TITOLO ----------
+            document.getElementById('hero_title').addEventListener('input', function() {
+                document.getElementById('hero_title_counter').textContent = this.value.length + '/70';
+            });
+
+            // ---------- NAVIGAZIONE ----------
+            document.querySelectorAll('.next-step').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (validateStep(currentStep)) {
+                        if (currentStep < totalSteps) showStep(currentStep + 1);
+                    }
+                });
+            });
+            document.querySelectorAll('.prev-step').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentStep > 1) showStep(currentStep - 1);
+                });
+            });
+
+            // ---------- GENERA RIEPILOGO ----------
+            function generateRiepilogo() {
+                const business = document.getElementById('business_name').value;
+                const email = document.getElementById('primary_email').value;
+                const heroTitle = document.getElementById('hero_title').value;
+                let html = '<div class="riepilogo-section"><h3>Attività</h3>';
+                html += `<p><strong>Nome:</strong> ${business}</p>`;
+                html += `<p><strong>Email:</strong> ${email}</p>`;
+                html += `<p><strong>Servizi inseriti:</strong> ${services.length}</p>`;
+                html += `<p><strong>Portfolio lavori:</strong> ${portfolio.length}</p>`;
+                html += `<p><strong>Foto gallery:</strong> ${filesData.gallery.length}</p>`;
+                html += '</div>';
+                if (services.length > 0) {
+                    html += '<div class="riepilogo-section"><h3>Primo servizio</h3>';
+                    html += `<p><strong>${services[0].name || '?'}:</strong> ${services[0].desc || ''}</p>`;
+                    html += '</div>';
+                }
+                document.getElementById('riepilogo').innerHTML = html;
+            }
+
+            // ---------- INVIO FORM (simulato) ----------
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!document.getElementById('consenso').checked) {
+                    document.getElementById('error_consenso').textContent = 'Devi accettare il consenso.';
+                    return;
+                }
+                // Validazioni finali (già fatte a step)
+                if (!validateStep(2) || !validateStep(3) || !validateStep(4)) {
+                    alert('Compila correttamente tutti i campi obbligatori.');
+                    return;
+                }
+                if (document.getElementById('portfolio_enabled').checked && portfolio.length === 0) {
+                    alert('Se la sezione portfolio è abilitata, devi inserire almeno un lavoro.');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-loading');
+
+                // Simula invio (sostituire con fetch reale)
+                setTimeout(() => {
+                    form.classList.add('hidden');
+                    document.getElementById('requestId').textContent = 'IMP' + Math.floor(Math.random()*10000);
+                    successMsg.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 1500);
+            });
+
+            // ---------- INIZIALIZZAZIONE ----------
+            renderServices();
+            renderPortfolio();
+            renderTestimonials();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="icon" href="../assets/img/fav.png">
+    <link rel="stylesheet" href="../src/css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 
+        ============================================================
+        PLACEHOLDER DA SOSTITUIRE:
+        ============================================================
+        
+        1. RECAPTCHA_SITE_KEY: Chiave reCAPTCHA v2/v3
+        2. API_ENDPOINT: URL dell'endpoint API (/api/change-request)
+        3. HOME_URL: URL della homepage (per il link di ritorno)
+        4. ADMIN_EMAIL: Email per il footer (opzionale)
+    -->
+    
+    <title>Richiedi modifica sito - siteo</title>
+    <meta name="description" content="Richiedi una modifica al tuo sito web siteo. Modifica testi, immagini, orari o aggiungi nuove sezioni.">
+    
+    <!-- reCAPTCHA API -->
+    <div class="g-recaptcha" id="recaptcha-container"></div>
+
+    <script type="module">
+        document.getElementById('recaptcha-container').dataset.sitekey =
+        import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+    </script>
+    
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --red: #dc2626;
+            --green: #16a34a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--black);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        a:hover {
+            opacity: 0.7;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-muted {
+            color: var(--gray-600);
+        }
+        
+        .text-small {
+            font-size: 0.875rem;
+        }
+        
+        .text-error {
+            color: var(--red);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .text-success {
+            color: var(--green);
+        }
+        
+        .text-info {
+            color: var(--gray-600);
+            background-color: var(--gray-50);
+            padding: 0.5rem;
+            border-radius: 2px;
+            font-size: 0.875rem;
+        }
+        
+        /* ===== LAYOUT & CONTAINERS ===== */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        main {
+            flex: 1;
+            padding: 3rem 0;
+        }
+        
+        /* ===== HEADER ===== */
+        .page-header {
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 0;
+            background-color: var(--white);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .back-link {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        /* ===== FORM STYLES ===== */
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-section-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9375rem;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--red);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0;
+            font-family: inherit;
+            font-size: 1rem;
+            background-color: var(--white);
+            transition: border-color 0.2s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--black);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .char-counter {
+            text-align: right;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+        
+        .char-counter.warning {
+            color: var(--red);
+        }
+        
+        /* ===== AUTO-SECTION STYLES ===== */
+        .auto-section-info {
+            background-color: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 2px;
+        }
+        
+        .auto-section-info p {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* ===== RADIO & CHECKBOX ===== */
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: normal;
+        }
+        
+        .radio-label input[type="radio"] {
+            margin: 0;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+        
+        /* ===== FILE UPLOAD ===== */
+        .file-upload {
+            border: 2px dashed var(--gray-300);
+            border-radius: 0;
+            padding: 2rem;
+            text-align: center;
+            background-color: var(--gray-50);
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--gray-400);
+        }
+        
+        .file-upload.dragover {
+            border-color: var(--black);
+            background-color: var(--gray-100);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-list {
+            margin-top: 1rem;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background-color: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 0.5rem;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .file-icon {
+            color: var(--gray-500);
+        }
+        
+        .file-name {
+            font-size: 0.875rem;
+        }
+        
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+        
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+        
+        .file-remove:hover {
+            color: var(--red);
+        }
+        
+        /* ===== RECAPTCHA ===== */
+        .recaptcha-container {
+            margin: 2rem 0;
+            min-height: 78px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            border: 1px solid var(--black);
+            background-color: var(--black);
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border-radius: 0;
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+        }
+        
+        .btn:hover:not(:disabled) {
+            background-color: var(--white);
+            color: var(--black);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-loading {
+            position: relative;
+            color: transparent;
+        }
+        
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        .btn-loading:hover::after {
+            border-color: var(--black);
+            border-top-color: transparent;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ===== MESSAGES ===== */
+        .message {
+            padding: 1.5rem;
+            border: 1px solid;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .message-success {
+            background-color: rgba(22, 163, 74, 0.1);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        
+        .message-error {
+            background-color: rgba(220, 38, 38, 0.1);
+            border-color: var(--red);
+            color: var(--red);
+        }
+        
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 3rem 0 2rem;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            margin-top: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray-400);
+            margin: 0 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--gray-300);
+        }
+        
+        /* ===== CONDITIONAL FIELDS ===== */
+        .conditional-field {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .conditional-field.visible {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .radio-group {
+                gap: 3rem;
+            }
+            
+            .btn {
+                width: auto;
+                min-width: 200px;
+            }
+            
+            .contact-fields {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        /* ===== ACCESSIBILITY ===== */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        :focus {
+            outline: 2px solid var(--black);
+            outline-offset: 2px;
+        }
+        
+        :focus:not(:focus-visible) {
+            outline: none;
+        }
+        
+        /* ===== UTILITY CLASSES ===== */
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .auto-filled {
+            background-color: var(--gray-50);
+            color: var(--gray-700);
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="page-header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">siteo</a>
+            <!-- SOSTITUIRE HOME_URL -->
+            <a href="../index.html" class="back-link">← Torna al sito</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- ===== SUCCESS MESSAGE ===== -->
+            <div id="successMessage" class="message message-success hidden">
+                <h2>Richiesta inviata con successo!</h2>
+                <p id="requestId">ID richiesta: <strong>###</strong></p>
+                <p>Il nostro team valuterà la tua richiesta entro 72 ore.</p>
+                <p class="text-small mt-2">Riceverai una email di conferma all'indirizzo fornito.</p>
+            </div>
+
+            <!-- ===== ERROR MESSAGE ===== -->
+            <div id="errorMessage" class="message message-error hidden">
+                <h2>Errore nell'invio</h2>
+                <p id="errorText">Si è verificato un errore. Riprova più tardi.</p>
+            </div>
+
+            <!-- ===== MAIN FORM ===== -->
+            <div id="mainForm">
+                <h1 class="text-center">Richiedi una modifica al tuo sito</h1>
+                <p class="text-center text-muted mb-3">
+                    Compila il modulo: il nostro team valuterà e applicherà la modifica.<br>
+                    Non eseguiamo modifiche automatiche.
+                </p>
+
+                <form id="modificationForm">
+                    <!-- SEZIONE INFORMAZIONI CONTATTO -->
+                    <section class="form-section">
+                        <h2 class="form-section-title">Informazioni attività</h2>
+                        
+                        <div class="form-group">
+                            <label for="business_name" class="required">Nome attività</label>
+                            <input type="text" 
+                                   id="business_name" 
+                                   name="business_name" 
+                                   required 
+                                   placeholder="Es. Barbiere Rossi">
+                            <div class="text-error" id="business_name_error"></div>
+                        </div>
+                        
+                        <div class="contact-fields">
+                            <div class="form-group">
+                                <label for="contact_email">Email di riferimento</label>
+                                <input type="email" 
+                                       id="contact_email" 
+                                       name="contact_email" 
+                                       placeholder="esempio@dominio.it">
+                                <div class="text-error" id="contact_email_error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact_phone">Telefono di riferimento</label>
+                                <input type="tel" 
+                                       id="contact_phone" 
+                                       name="contact_phone" 
+                                       placeholder="+39 333 1234567">
+                                <div class="text-error" id="contact_phone_error"></div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-small text-muted">Inserisci almeno un metodo di contatto (email o telefono)</p>
+                    </section>
+
+                    <!-- SEZIONE TIPO DI RICHIESTA -->
+                    <section class="form-section">
+                        <h2 class="form-section-title">Tipo di richiesta</h2>
+                        
+                        <div class="form-group">
+                            <label for="request_type" class="required">Tipo di modifica</label>
+                            <select id="request_type" name="request_type" required>
+                                <option value="">Seleziona il tipo di modifica</option>
+                                <option value="modifica_contenuti">Modifica contenuti (testi/descrizioni)</option>
+                                <option value="aggiornamento_orari">Aggiornamento orari</option>
+                                <option value="aggiunta_sezione">Aggiunta sezione</option>
+                                <option value="rimozione_sezione">Rimozione sezione</option>
+                                <option value="aggiornamento_immagini">Aggiunta / sostituzione immagini</option>
+                                <option value="altro">Altro</option>
+                            </select>
+                            <div class="text-error" id="request_type_error"></div>
+                        </div>
+                        
+                        <!-- INFO SEZIONE AUTOCOMPILATA -->
+                        <div id="autoSectionInfo" class="auto-section-info hidden">
+                            <p>📋 <strong>Sezione precompilata:</strong> <span id="autoSectionName"></span></p>
+                            <p class="text-small mt-1">La sezione è stata impostata automaticamente in base al tipo di modifica selezionato. Puoi cambiarla se necessario.</p>
+                        </div>
+                        
+                        <!-- SELEZIONE MANUALE SEZIONE -->
+                        <div id="sectionGroup" class="form-group">
+                            <label for="section">Sezione interessata (opzionale)</label>
+                            <select id="section" name="section">
+                                <option value="">Scegli la sezione (se applicabile)</option>
+                                <option value="hero">Hero (inizio pagina)</option>
+                                <option value="chi_siamo">Chi siamo</option>
+                                <option value="servizi">Servizi</option>
+                                <option value="menu">Menù</option>
+                                <option value="galleria">Galleria immagini</option>
+                                <option value="orari">Orari</option>
+                                <option value="dove_siamo">Dove siamo</option>
+                                <option value="contatti">Contatti</option>
+                                <option value="social">Social media</option>
+                                <option value="lavora_con_noi">Lavora con noi</option>
+                                <option value="footer">Footer (piè di pagina)</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <!-- SEZIONE DESCRIZIONE DETTAGLIATA -->
+                    <section class="form-section">
+                        <h2 class="form-section-title">Descrizione della modifica</h2>
+                        
+                        <div class="form-group">
+                            <label for="description" class="required">Descrizione dettagliata</label>
+                            <textarea id="description" 
+                                      name="description" 
+                                      required 
+                                      minlength="20" 
+                                      maxlength="2000"
+                                      placeholder="Spiega esattamente cosa vuoi cambiare. Per favore includi:
+- Cosa deve essere cambiato
+- Testo nuovo (se applicabile)
+- Qualche riferimento specifico
+Esempio: 'Vorrei aggiornare gli orari di apertura: lun-ven 9-18, sab 9-13'"></textarea>
+                            <div class="char-counter" id="description_counter">0/2000 caratteri</div>
+                            <div class="text-error" id="description_error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="text_payload">Contenuti testuali da sostituire (opzionale)</label>
+                            <textarea id="text_payload" 
+                                      name="text_payload" 
+                                      maxlength="1000"
+                                      placeholder="Incolla qui il testo nuovo da inserire (massimo 1000 caratteri)"></textarea>
+                            <div class="char-counter" id="text_payload_counter">0/1000 caratteri</div>
+                        </div>
+                    </section>
+
+                    <!-- SEZIONE ALLEGATI -->
+                    <section class="form-section">
+                        <h2 class="form-section-title">Allegati</h2>
+                        
+                        <div class="form-group">
+                            <label>File allegati (opzionale)</label>
+                            <p class="text-small text-muted mb-2">
+                                Puoi allegare immagini o PDF (max 5 file, 4MB ciascuno)
+                            </p>
+                            
+                            <div class="file-upload" id="fileDropArea">
+                                <input type="file" 
+                                       id="file_input" 
+                                       class="file-input" 
+                                       accept="image/*,.pdf"
+                                       multiple>
+                                <p>Trascina i file qui o <span style="color: var(--black); text-decoration: underline;">clicca per selezionare</span></p>
+                                <p class="text-small text-muted mt-1">Supportati: JPG, PNG, PDF (max 4MB ciascuno)</p>
+                            </div>
+                            
+                            <div class="file-list" id="fileList"></div>
+                            <div class="text-error" id="file_error"></div>
+                        </div>
+                    </section>
+
+                    <!-- SEZIONE URGENZA E CONFERMA -->
+                    <section class="form-section">
+                        <h2 class="form-section-title">Conferma</h2>
+                        
+                        <div class="form-group">
+                            <label>Urgenza della richiesta</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="urgency" value="normale" checked>
+                                    Normale (gestione standard)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="urgency" value="prioritaria">
+                                    Prioritaria (richiede attenzione urgente)
+                                </label>
+                            </div>
+                            <p class="text-small text-muted">L'urgenza è solo informativa per il team</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="confirmation" required>
+                                <span>
+                                    Confermo che questa richiesta verrà valutata dal team e potrebbe richiedere tempo; 
+                                    non è un intervento automatico.
+                                    <span class="required"></span>
+                                </span>
+                            </label>
+                            <div class="text-error" id="confirmation_error"></div>
+                        </div>
+                        
+                        <!-- reCAPTCHA -->
+                        <div class="recaptcha-container">
+                            <!-- SOSTITUIRE RECAPTCHA_SITE_KEY -->
+                            <div class="g-recaptcha" data-sitekey="RECAPTCHA_SITE_KEY"></div>
+                        </div>
+                        <div class="text-error" id="recaptcha_error"></div>
+                        
+                        <!-- SUBMIT BUTTON -->
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn" id="submitBtn">
+                                Invia richiesta
+                            </button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">siteo</div>
+                <p class="text-muted">Servizio di modifica siti per attività locali</p>
+                
+                <div class="footer-links">
+                    <!-- SOSTITUIRE HOME_URL -->
+                    <a href="../index.html">Torna al sito</a>
+                    <!-- SOSTITUIRE ADMIN_EMAIL -->
+                    <a href="mailto:ADMIN_EMAIL">Assistenza</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== VARIABILI GLOBALI =====
+        let selectedFiles = [];
+        const MAX_FILES = 5;
+        const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB
+        const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+
+        // ===== MAPPING TIPO -> SEZIONE (per auto-completamento) =====
+        const autoSectionMapping = {
+            'aggiornamento_orari': {
+                section: 'orari',
+                name: 'Orari',
+                message: 'Abbiamo impostato automaticamente la sezione "Orari" per questa modifica.'
+            },
+            'aggiornamento_immagini': {
+                section: 'galleria',
+                name: 'Galleria immagini',
+                message: 'Abbiamo impostato automaticamente la sezione "Galleria" per questa modifica.'
+            }
+        };
+
+        // ===== INIZIALIZZAZIONE =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initForm();
+            setupEventListeners();
+        });
+
+        // ===== INIZIALIZZAZIONE FORM =====
+        function initForm() {
+            // Inizializza i contatori di caratteri
+            setupCharacterCounter('description', 2000);
+            setupCharacterCounter('section_details', 400);
+            setupCharacterCounter('text_payload', 1000);
+            
+            // Setup per campi condizionali
+            const requestTypeSelect = document.getElementById('request_type');
+            requestTypeSelect.addEventListener('change', handleRequestTypeChange);
+        }
+
+        // ===== SETUP EVENT LISTENERS =====
+        function setupEventListeners() {
+            // File upload
+            const fileInput = document.getElementById('file_input');
+            const fileDropArea = document.getElementById('fileDropArea');
+            
+            fileDropArea.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            fileDropArea.addEventListener('dragover', handleDragOver);
+            fileDropArea.addEventListener('dragleave', handleDragLeave);
+            fileDropArea.addEventListener('drop', handleDrop);
+            
+            // Form submission
+            document.getElementById('modificationForm').addEventListener('submit', handleSubmit);
+            
+            // Gestione cambio sezione manuale
+            document.getElementById('section').addEventListener('change', handleManualSectionChange);
+        }
+
+        // ===== GESTIONE CAMBIO TIPO RICHIESTA =====
+        function handleRequestTypeChange() {
+            const requestType = document.getElementById('request_type').value;
+            const sectionSelect = document.getElementById('section');
+            const autoSectionInfo = document.getElementById('autoSectionInfo');
+            const autoSectionName = document.getElementById('autoSectionName');
+            const sectionDetailsField = document.getElementById('section_details_field');
+            
+            // Gestione campi condizionali per aggiunta/rimozione sezione
+            if (requestType === 'aggiunta_sezione' || requestType === 'rimozione_sezione') {
+                sectionDetailsField.classList.add('visible');
+            } else {
+                sectionDetailsField.classList.remove('visible');
+            }
+            
+            // Auto-completamento sezione quando ovvio
+            if (autoSectionMapping[requestType]) {
+                const mapping = autoSectionMapping[requestType];
+                
+                // Imposta la sezione automaticamente
+                sectionSelect.value = mapping.section;
+                sectionSelect.classList.add('auto-filled');
+                
+                // Mostra il messaggio informativo
+                autoSectionName.textContent = mapping.name;
+                autoSectionInfo.classList.remove('hidden');
+                
+                // Nasconde il campo sezione (opzionale, rendiamolo visibile ma evidenziato)
+                // sectionSelect.style.display = 'none';
+            } else {
+                // Rimuovi auto-completamento
+                sectionSelect.classList.remove('auto-filled');
+                autoSectionInfo.classList.add('hidden');
+                // sectionSelect.style.display = 'block';
+            }
+        }
+
+        // ===== GESTIONE CAMBIO SEZIONE MANUALE =====
+        function handleManualSectionChange() {
+            const sectionSelect = document.getElementById('section');
+            const requestType = document.getElementById('request_type').value;
+            
+            // Se l'utente cambia manualmente la sezione, rimuovi lo stile "auto-filled"
+            if (autoSectionMapping[requestType]) {
+                const mapping = autoSectionMapping[requestType];
+                if (sectionSelect.value !== mapping.section) {
+                    sectionSelect.classList.remove('auto-filled');
+                    document.getElementById('autoSectionInfo').classList.add('hidden');
+                }
+            }
+        }
+
+        // ===== GESTIONE FILE =====
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            processFiles(files);
+            event.target.value = ''; // Reset input
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            document.getElementById('fileDropArea').classList.add('dragover');
+        }
+
+        function handleDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            document.getElementById('fileDropArea').classList.remove('dragover');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            document.getElementById('fileDropArea').classList.remove('dragover');
+            
+            const files = Array.from(event.dataTransfer.files);
+            processFiles(files);
+        }
+
+        function processFiles(files) {
+            const fileError = document.getElementById('file_error');
+            fileError.textContent = '';
+            
+            // Verifica numero massimo di file
+            if (selectedFiles.length + files.length > MAX_FILES) {
+                fileError.textContent = `Puoi caricare al massimo ${MAX_FILES} file`;
+                return;
+            }
+            
+            // Processa ogni file
+            files.forEach(file => {
+                // Verifica dimensione
+                if (file.size > MAX_FILE_SIZE) {
+                    fileError.textContent = `Il file "${file.name}" supera i 4MB`;
+                    return;
+                }
+                
+                // Verifica tipo
+                if (!ALLOWED_TYPES.includes(file.type)) {
+                    fileError.textContent = `Il file "${file.name}" non è di tipo supportato`;
+                    return;
+                }
+                
+                // Aggiungi file alla lista
+                selectedFiles.push(file);
+                addFileToList(file);
+            });
+            
+            // Aggiorna UI
+            updateFileList();
+        }
+
+        function addFileToList(file) {
+            const fileList = document.getElementById('fileList');
+            
+            // Crea elemento file
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.dataset.name = file.name;
+            
+            // Determina icona in base al tipo
+            const icon = file.type.startsWith('image/') ? '🖼️' : '📄';
+            
+            // Formatta dimensione
+            const size = formatFileSize(file.size);
+            
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <span class="file-icon">${icon}</span>
+                    <div>
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${size}</div>
+                    </div>
+                </div>
+                <button type="button" class="file-remove" onclick="removeFile('${file.name}')">×</button>
+            `;
+            
+            fileList.appendChild(fileItem);
+        }
+
+        function removeFile(fileName) {
+            selectedFiles = selectedFiles.filter(file => file.name !== fileName);
+            updateFileList();
+        }
+
+        function updateFileList() {
+            const fileList = document.getElementById('fileList');
+            const fileDropArea = document.getElementById('fileDropArea');
+            
+            // Svuota lista
+            fileList.innerHTML = '';
+            
+            // Riaggiungi file
+            selectedFiles.forEach(file => addFileToList(file));
+            
+            // Aggiorna messaggio drop area
+            if (selectedFiles.length > 0) {
+                fileDropArea.innerHTML = `
+                    <p><span style="color: var(--black); text-decoration: underline;">Clicca per aggiungere altri file</span></p>
+                    <p class="text-small text-muted mt-1">${selectedFiles.length}/${MAX_FILES} file selezionati</p>
+                `;
+            } else {
+                fileDropArea.innerHTML = `
+                    <p>Trascina i file qui o <span style="color: var(--black); text-decoration: underline;">clicca per selezionare</span></p>
+                    <p class="text-small text-muted mt-1">Supportati: JPG, PNG, PDF (max 4MB ciascuno)</p>
+                `;
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        // ===== CONTATORI CARATTERI =====
+        function setupCharacterCounter(textareaId, maxLength) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(textareaId + '_counter');
+            
+            if (!textarea || !counter) return;
+            
+            textarea.addEventListener('input', function() {
+                const length = this.value.length;
+                counter.textContent = `${length}/${maxLength} caratteri`;
+                
+                if (length > maxLength * 0.9) {
+                    counter.classList.add('warning');
+                } else {
+                    counter.classList.remove('warning');
+                }
+            });
+            
+            // Inizializza contatore
+            textarea.dispatchEvent(new Event('input'));
+        }
+
+        // ===== VALIDAZIONE =====
+        function validateForm() {
+            let isValid = true;
+            const errors = {};
+            
+            // Resetta errori precedenti
+            document.querySelectorAll('.text-error').forEach(el => el.textContent = '');
+            
+            // Validazione nome attività
+            const businessName = document.getElementById('business_name').value.trim();
+            if (!businessName) {
+                errors.business_name = 'Il nome dell\'attività è obbligatorio';
+                isValid = false;
+            }
+            
+            // Validazione almeno un contatto
+            const email = document.getElementById('contact_email').value.trim();
+            const phone = document.getElementById('contact_phone').value.trim();
+            if (!email && !phone) {
+                errors.contact_email = 'Inserisci almeno un metodo di contatto (email o telefono)';
+                errors.contact_phone = 'Inserisci almeno un metodo di contatto (email o telefono)';
+                isValid = false;
+            }
+            
+            // Validazione email se fornita
+            if (email && !isValidEmail(email)) {
+                errors.contact_email = 'Email non valida';
+                isValid = false;
+            }
+            
+            // Validazione telefono se fornito
+            if (phone && !isValidPhone(phone)) {
+                errors.contact_phone = 'Numero di telefono non valido';
+                isValid = false;
+            }
+            
+            // Validazione tipo richiesta
+            const requestType = document.getElementById('request_type').value;
+            if (!requestType) {
+                errors.request_type = 'Seleziona il tipo di modifica';
+                isValid = false;
+            }
+            
+            // Validazione descrizione
+            const description = document.getElementById('description').value.trim();
+            if (!description) {
+                errors.description = 'La descrizione è obbligatoria';
+                isValid = false;
+            } else if (description.length < 20) {
+                errors.description = 'La descrizione deve contenere almeno 20 caratteri';
+                isValid = false;
+            }
+            
+            // Validazione dettagli sezione (se richiesto)
+            if (requestType === 'aggiunta_sezione' || requestType === 'rimozione_sezione') {
+                const sectionDetails = document.getElementById('section_details').value.trim();
+                if (sectionDetails && sectionDetails.length > 400) {
+                    errors.section_details = 'Massimo 400 caratteri';
+                    isValid = false;
+                }
+            }
+            
+            // Validazione contenuto testuale
+            const textPayload = document.getElementById('text_payload').value.trim();
+            if (textPayload && textPayload.length > 1000) {
+                errors.text_payload = 'Massimo 1000 caratteri';
+                isValid = false;
+            }
+            
+            // Validazione file
+            if (selectedFiles.length > MAX_FILES) {
+                errors.file = `Massimo ${MAX_FILES} file`;
+                isValid = false;
+            }
+            
+            // Validazione reCAPTCHA
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                errors.recaptcha = 'Completa la verifica reCAPTCHA';
+                isValid = false;
+            }
+            
+            // Validazione checkbox conferma
+            if (!document.getElementById('confirmation').checked) {
+                errors.confirmation = 'Devi confermare di aver compreso le modalità del servizio';
+                isValid = false;
+            }
+            
+            // Mostra errori
+            Object.keys(errors).forEach(field => {
+                const errorEl = document.getElementById(field + '_error');
+                if (errorEl) {
+                    errorEl.textContent = errors[field];
+                }
+            });
+            
+            return { isValid, errors };
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function isValidPhone(phone) {
+            // Accetta numeri con o senza prefisso internazionale
+            const re = /^[\+]?[0-9\s\-\(\)]+$/;
+            return re.test(phone);
+        }
+
+        // ===== INVIO FORM =====
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Validazione
+            const { isValid, errors } = validateForm();
+            if (!isValid) {
+                // Scrolla al primo errore
+                const firstError = Object.keys(errors)[0];
+                const errorElement = document.getElementById(firstError + '_error');
+                if (errorElement) {
+                    errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+            
+            // Prepara dati
+            const formData = new FormData();
+            
+            // Aggiungi campi del form
+            formData.append('business_name', document.getElementById('business_name').value.trim());
+            formData.append('contact_email', document.getElementById('contact_email').value.trim() || '');
+            formData.append('contact_phone', document.getElementById('contact_phone').value.trim() || '');
+            formData.append('request_type', document.getElementById('request_type').value);
+            formData.append('section', document.getElementById('section').value || '');
+            formData.append('description', document.getElementById('description').value.trim());
+            
+            const sectionDetails = document.getElementById('section_details').value.trim();
+            if (sectionDetails) {
+                formData.append('section_details', sectionDetails);
+            }
+            
+            const textPayload = document.getElementById('text_payload').value.trim();
+            if (textPayload) {
+                formData.append('text_payload', textPayload);
+            }
+            
+            formData.append('urgency', document.querySelector('input[name="urgency"]:checked').value);
+            formData.append('recaptcha_token', grecaptcha.getResponse());
+            
+            // Aggiungi file
+            selectedFiles.forEach((file, index) => {
+                formData.append(`file_${index}`, file);
+            });
+            
+            // Invia richiesta
+            await submitForm(formData);
+        }
+
+        async function submitForm(formData) {
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                // Disabilita bottone e mostra loading
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-loading');
+                submitBtn.textContent = 'Invio in corso...';
+                
+                // SOSTITUIRE API_ENDPOINT con l'URL corretto
+                const response = await fetch('API_ENDPOINT', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Successo
+                    showSuccess(data.id || Date.now()); // Usa ID dal server o timestamp
+                } else {
+                    // Errore dal server
+                    throw new Error(data.error || 'Errore durante l\'invio');
+                }
+                
+            } catch (error) {
+                // Errore di rete o dal server
+                showError(error.message);
+            } finally {
+                // Ripristina bottone
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-loading');
+                submitBtn.textContent = originalText;
+                
+                // Resetta reCAPTCHA
+                grecaptcha.reset();
+            }
+        }
+
+        // ===== GESTIONE RISULTATI =====
+        function showSuccess(requestId) {
+            // Mostra ID richiesta
+            document.getElementById('requestId').innerHTML = 
+                `ID richiesta: <strong>${requestId}</strong>`;
+            
+            // Nascondi form, mostra successo
+            document.getElementById('mainForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+            
+            // Scrolla in alto
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Opzionale: invia evento a Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    'event_category': 'modification_request',
+                    'event_label': 'success'
+                });
+            }
+        }
+
+        function showError(errorMessage) {
+            // Mostra messaggio di errore
+            document.getElementById('errorText').textContent = errorMessage;
+            document.getElementById('errorMessage').classList.remove('hidden');
+            
+            // Scrolla all'errore
+            document.getElementById('errorMessage').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+            
+            // Nascondi dopo 10 secondi
+            setTimeout(() => {
+                document.getElementById('errorMessage').classList.add('hidden');
+            }, 10000);
+            
+            // Opzionale: invia evento a Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    'event_category': 'modification_request',
+                    'event_label': 'error'
+                });
+            }
+        }
+
+        // ===== PREVENT FORM RESUBMISSION =====
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+
+    <!-- 
+        ===== GOOGLE ANALYTICS PLACEHOLDER =====
+        SOSTITUIRE GA_MEASUREMENT_ID con il proprio ID Google Analytics
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+    KK
+    <script type="module">
+        const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (gaId) {
+        const s = document.createElement('script');
+        s.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+    }
+    </script>
+    -->
+</body>
+</html>

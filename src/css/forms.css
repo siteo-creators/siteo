@@ -1,0 +1,481 @@
+/* src/css/forms.css */
+
+/* ===== STEP PANEL VISIBILITY ===== */
+main {
+    padding-bottom: 4rem;
+}
+
+.step-panel {
+    display: none;
+}
+
+.step-panel.active {
+    display: block !important;
+    animation: fadeInForm 0.4s ease;
+}
+
+@keyframes fadeInForm {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== PROGRESS BAR (TOP) ===== */
+.progress-container {
+    margin-bottom: 3rem;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    gap: 0.5rem;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--gray-200);
+    z-index: 0;
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    position: relative;
+    z-index: 1;
+    cursor: default;
+}
+
+.step-indicator span:first-child {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-200);
+    background-color: var(--white);
+    color: var(--gray-400);
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.step-label {
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    text-align: center;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+/* Step attivo */
+.step-indicator.active span:first-child {
+    background-color: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+}
+
+.step-indicator.active .step-label {
+    color: var(--black);
+    font-weight: 600;
+}
+
+/* Step completato */
+.step-indicator.completed span:first-child {
+    background-color: var(--gray-800);
+    border-color: var(--gray-800);
+    color: var(--white);
+}
+
+.step-indicator.completed .step-label {
+    color: var(--gray-600);
+}
+
+/* ===== FORM GROUPS & INPUTS ===== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+    color: var(--gray-800);
+}
+
+label.required::after {
+    content: ' *';
+    color: var(--gray-500);
+    font-weight: 400;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--gray-900);
+    background-color: var(--white);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--black);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23737373' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+/* ===== ERROR MESSAGES (inline) ===== */
+.error-message {
+    color: #c0392b;
+    font-size: 0.8125rem;
+    margin-top: 0.35rem;
+    min-height: 1rem;
+}
+
+/* ===== ERROR BOX (globale) ===== */
+.error-box {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-left: 4px solid #c0392b;
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    color: #7f1d1d;
+    font-size: 0.9375rem;
+}
+
+/* ===== SUCCESS MESSAGE ===== */
+.success-message {
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid var(--gray-200);
+    background-color: var(--gray-50);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+.success-message h2 {
+    margin-bottom: 0.75rem;
+}
+
+/* ===== HIDDEN UTILITY ===== */
+.hidden {
+    display: none !important;
+}
+
+/* ===== CHECKBOX GROUP ===== */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0.5rem 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--black);
+}
+
+/* ===== ORARI ===== */
+.orari-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.orari-row:last-child {
+    border-bottom: none;
+}
+
+.orari-apertura,
+.orari-chiusura {
+    width: 100%;
+}
+
+.orari-chiuso {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--gray-500);
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.orari-note {
+    grid-column: 1 / -1;
+    font-size: 0.875rem;
+}
+
+/* ===== UPLOAD AREA ===== */
+.upload-area {
+    border: 2px dashed var(--gray-300);
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+.upload-area:hover {
+    border-color: var(--black);
+    background-color: var(--gray-50);
+}
+
+.upload-area.drag-over {
+    border-color: var(--black);
+    background-color: var(--gray-100);
+}
+
+.file-input-hidden {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* ===== PREVIEW GRID ===== */
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.preview-grid > div {
+    position: relative;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.preview-grid img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    display: block;
+}
+
+.file-name {
+    font-size: 0.7rem;
+    color: var(--gray-600);
+    padding: 0.25rem 0.4rem;
+    background-color: var(--gray-50);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-file {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: rgba(0,0,0,0.6);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.remove-file:hover {
+    background-color: rgba(0,0,0,0.9);
+}
+
+/* ===== FAQ DINAMICHE ===== */
+.faq-domanda,
+.faq-risposta {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.remove-faq {
+    background: none;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+    color: var(--gray-500);
+    font-size: 1rem;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    align-self: flex-start;
+    margin-top: 0.25rem;
+}
+
+.remove-faq:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+.btn-add-faq {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+/* ===== RIEPILOGO ===== */
+.riepilogo-box {
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    padding: 1.5rem 2rem;
+    background-color: var(--gray-50);
+    margin-bottom: 1.5rem;
+}
+
+.riepilogo-section {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.riepilogo-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.riepilogo-section h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-500);
+    margin-bottom: 0.5rem;
+}
+
+.riepilogo-section p {
+    margin-bottom: 0.25rem;
+    font-size: 0.9375rem;
+}
+
+/* ===== NAV BUTTONS ===== */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    gap: 1rem;
+}
+
+.nav-buttons .btn:first-child:last-child {
+    margin-left: auto;
+}
+
+/* ===== STEP PANEL HEADER ===== */
+.step-panel h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.step-panel > p {
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767px) {
+    .orari-row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .orari-row label {
+        grid-column: 1 / -1;
+        font-size: 0.875rem;
+    }
+
+    .orari-chiuso {
+        grid-column: 1 / -1;
+    }
+
+    .progress-steps {
+        gap: 0.25rem;
+    }
+
+    .step-label {
+        display: none;
+    }
+
+    .step-indicator span:first-child {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+    }
+
+    .nav-buttons {
+        flex-direction: column-reverse;
+    }
+
+    .nav-buttons .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
