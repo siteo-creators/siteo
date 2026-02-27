@@ -269,27 +269,35 @@ header {
     text-align: center;
     position: relative;
     overflow: hidden;
+    background-image: url('sfondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gray-300), transparent);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h1 {
     max-width: 800px;
     margin: 0 auto 1.5rem;
     font-weight: 600;
+    color: var(--white);
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
-    color: var(--gray-600);
+    color: rgba(255, 255, 255, 0.85);
     max-width: 600px;
     margin: 0 auto 3rem;
     line-height: 1.6;
@@ -300,7 +308,7 @@ header {
 }
 
 .price-note {
-    color: var(--gray-600);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 0.9375rem;
     margin-top: 1.5rem;
 }
