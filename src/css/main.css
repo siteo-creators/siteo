@@ -269,7 +269,7 @@ header {
     text-align: center;
     position: relative;
     overflow: hidden;
-    background-image: url('sfondo.jpg');
+    background-image: url('public/sfondo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
