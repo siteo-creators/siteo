@@ -21,12 +21,6 @@
     <meta name="description" content="Richiedi una modifica al tuo sito web siteo. Modifica testi, immagini, orari o aggiungi nuove sezioni.">
     
     <!-- reCAPTCHA API -->
-    <div class="g-recaptcha" id="recaptcha-container"></div>
-
-    <script type="module">
-        document.getElementById('recaptcha-container').dataset.sitekey =
-        import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-    </script>
     
     <style>
         /* ===== RESET & BASE STYLES ===== */
@@ -761,8 +755,8 @@ Esempio: 'Vorrei aggiornare gli orari di apertura: lun-ven 9-18, sab 9-13'"></te
                         
                         <!-- reCAPTCHA -->
                         <div class="recaptcha-container">
-                            <!-- SOSTITUIRE RECAPTCHA_SITE_KEY -->
-                            <div class="g-recaptcha" data-sitekey="RECAPTCHA_SITE_KEY"></div>
+                            <!-- SOSTITUIRE RECAPTCHA_SITE_KEY -> sostituito -->
+                            <div class="g-recaptcha" data-sitekey="6LfXEHssAAAAABM3Y61z_WPe2xM7bQg5MFMqbdO4"></div>
                         </div>
                         <div class="text-error" id="recaptcha_error"></div>
                         
@@ -789,7 +783,7 @@ Esempio: 'Vorrei aggiornare gli orari di apertura: lun-ven 9-18, sab 9-13'"></te
                     <!-- SOSTITUIRE HOME_URL -->
                     <a href="../index.html">Torna al sito</a>
                     <!-- SOSTITUIRE ADMIN_EMAIL -->
-                    <a href="mailto:ADMIN_EMAIL">Assistenza</a>
+                    <a href="mailto:team@siteo.it">Assistenza</a>
                 </div>
             </div>
         </div>
@@ -1223,7 +1217,7 @@ Esempio: 'Vorrei aggiornare gli orari di apertura: lun-ven 9-18, sab 9-13'"></te
                 submitBtn.textContent = 'Invio in corso...';
                 
                 // SOSTITUIRE API_ENDPOINT con l'URL corretto
-                const response = await fetch('API_ENDPOINT', {
+                const response = await fetch('https://formspree.io/f/xlgwkrbg', {
                     method: 'POST',
                     body: formData,
                     headers: {

@@ -1,6 +1,9 @@
 # Dipendenze
 node_modules/
 
+# Templates
+templates/
+
 # Build output
 dist/
 build/
