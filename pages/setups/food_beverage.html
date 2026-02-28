@@ -725,10 +725,11 @@
                 // Disabilita bottone
                 submitBtn.disabled = true;
                 submitBtn.classList.add('btn-loading');
-
+                
+                //Fetch - Formspree
                 try {
                     // Simula chiamata API (sostituire con URL reale)
-                    const response = await fetch(import.meta.env.VITE_FORM_ENDPOINT, {
+                    const response = await fetch(import.meta.env.VITE_FORM_ENDPOINT_FOOD, {
                     method: 'POST',
                     body: formData
                     });
