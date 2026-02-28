@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>siteo · Configura il tuo sito (Impresa locale)</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="icon" type="image/png" href="/assets/img/fav.png">
     <link rel="stylesheet" href="/src/css/main.css">
     <link rel="stylesheet" href="/src/css/forms.css">
@@ -363,6 +364,14 @@
                     </div>
                     <div class="nav-buttons">
                         <button type="button" class="btn btn-outline prev-step">Indietro</button>
+                        <!-- Honeypot anti-spam -->
+                        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+                        <!-- reCAPTCHA -->
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="%VITE_RECAPTCHA_SITE_KEY%"></div>
+                            <div class="error-message" id="error_recaptcha"></div>
+                        </div>
                         <button type="submit" class="btn" id="submitBtn">Mostrami l'anteprima in 3 giorni</button>
                     </div>
                 </div>
@@ -911,6 +920,11 @@
             // ---------- INVIO FORM (simulato) ----------
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (!recaptchaResponse) {
+                    document.getElementById('error_recaptcha').textContent = 'Completa la verifica reCAPTCHA';
+                    return;
+                }
                 if (!document.getElementById('consenso').checked) {
                     document.getElementById('error_consenso').textContent = 'Devi accettare il consenso.';
                     return;
