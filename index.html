@@ -463,28 +463,15 @@
                     </p>
                 </div>
             </div>
-            <!--Integrazione Vite-->
-            <script type="module">
-                const email = import.meta.env.VITE_CONTACT_EMAIL;
-                const phone = import.meta.env.VITE_CONTACT_PHONE;
-              
-                const emailEl = document.getElementById('contact-email');
-                if (emailEl && email) {
-                  emailEl.href = `mailto:${email}`;
-                  emailEl.textContent = email;
-                }
-              
-                const phoneEl = document.getElementById('contact-phone');
-                if (phoneEl && phone) {
-                  phoneEl.href = `tel:${phone}`;
-                  phoneEl.textContent = phone;
-                }
-              </script>
+            <script>
+                document.getElementById('contact-email').href = 'mailto:team@siteo.it';
+                document.getElementById('contact-email').textContent = 'team@siteo.it';
+            </script>
             
             <div class="footer-bottom">
                 <p>
                     <!-- SOSTITUIRE P_IVA -->
-                    © 2026 siteo · P.IVA PIVA_PLACEHOLDER
+                    © 2026 siteo <!--· P.IVA PIVA_PLACEHOLDER-->
                 </p>
                 <div class="footer-links">
                     <a href="#">Privacy</a>
