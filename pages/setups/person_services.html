@@ -1,943 +1,195 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>siteo · Configura il tuo sito (Servizi alla persona)</title>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <link rel="icon" type="image/png" href="/assets/img/fav.png">
-    <link rel="stylesheet" href="/src/css/main.css">
-    <link rel="stylesheet" href="/src/css/forms.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>siteo · Servizi alla persona — Configura il sito</title>
+  <link rel="icon" type="image/png" href="/public/assets/img/fav.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/src/css/main.css">
+  <style>
+    main { padding: 4.5rem 0 6rem; }
+
+    .setup-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 880px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    @media (min-width: 768px) { .setup-layout { grid-template-columns: 1fr 320px; } }
+
+    .setup-intro h1 { font-size: clamp(1.9rem, 3.5vw, 2.5rem); margin-bottom: .75rem; }
+
+    .process-steps { display: flex; flex-direction: column; gap: .75rem; margin: 2rem 0; }
+    .process-step {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.1rem 1.25rem;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+    }
+    .p-num {
+      width: 28px; height: 28px; min-width: 28px;
+      background: var(--g-gold-btn);
+      background-size: 200% auto;
+      color: var(--dark);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .78rem;
+    }
+    .process-step p { margin: 0; font-size: .9rem; color: var(--ink-2); line-height: 1.5; }
+    .process-step strong { color: var(--ink); }
+
+    .info-note {
+      display: flex; gap: .75rem;
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-line);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      font-size: .875rem;
+      color: var(--ink-2);
+    }
+
+    .checklist-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 2rem;
+      position: sticky;
+      top: 88px;
+    }
+    .checklist-card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 1.25rem;
+    }
+
+    .checklist { list-style: none; margin-bottom: 1.75rem; }
+    .checklist li {
+      display: flex; align-items: baseline; gap: .6rem;
+      padding: .5rem 0;
+      border-bottom: 1px solid var(--bg-alt);
+      font-size: .875rem;
+      color: var(--ink-2);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before { content: '□'; color: var(--gold); font-size: .9rem; flex-shrink: 0; }
+    .checklist li .opt { font-size: .75rem; color: var(--ink-4); margin-left: .2rem; }
+
+    .tally-btn {
+      display: flex;
+      width: 100%;
+      align-items: center; justify-content: center;
+      gap: .5rem;
+      padding: .9rem 1.5rem;
+      background: var(--g-gold-btn);
+      background-size: 200% auto;
+      border: none;
+      border-radius: 3px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9375rem;
+      font-weight: 600;
+      color: var(--dark);
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(184,137,42,.25);
+      transition: background-position .5s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .tally-btn:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,137,42,.35); opacity: 1; }
+    .tally-note { text-align: center; margin-top: .65rem; font-size: .75rem; color: var(--ink-4); }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container header-container">
-            <a href="/index.html" class="logo">siteo</a>
-            <a href="/index.html" class="back-link">← Torna al sito</a>
+
+<header class="scrolled">
+  <div class="container header-container">
+    <a href="/index.html" class="logo">siteo</a>
+    <a href="/pages/setups_config.html" class="back-link">← Scegli categoria</a>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="setup-layout">
+
+      <!-- Left -->
+      <div class="setup-intro">
+        <p class="eyebrow">Servizi alla persona</p>
+        <h1>Configura il tuo sito</h1>
+        <div class="gold-sep left"></div>
+        <p class="lead" style="margin-top:.25rem">
+          Compila il form con i dati della tua attività. In 2–3 giorni riceverai un link privato con l'anteprima.
+        </p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="p-num">1</div>
+            <p><strong>Prepara le informazioni</strong> — vedi la checklist a fianco prima di aprire il form.</p>
+          </div>
+          <div class="process-step">
+            <div class="p-num">2</div>
+            <p><strong>Compila il form su Tally</strong> — clicca il pulsante e inserisci i dati direttamente lì.</p>
+          </div>
+          <div class="process-step">
+            <div class="p-num">3</div>
+            <p><strong>Ricevi l'anteprima</strong> — entro 48–72 ore ricevi il link del sito via email.</p>
+          </div>
+          <div class="process-step">
+            <div class="p-num">4</div>
+            <p><strong>Zero pagamenti anticipati</strong> — paghi solo se il sito ti piace.</p>
+          </div>
         </div>
-    </header>
 
-    <main>
-        <div class="container">
-            <h1 class="text-center">Configura il tuo sito (Servizi alla persona)</h1>
-            <p class="text-center text-muted">Compila i dati della tua attività. In 2‑3 giorni riceverai l'anteprima gratuita.</p>
-
-            <!-- PROGRESS BAR -->
-            <div class="progress-container">
-                <div class="progress-steps">
-                    <div class="step-indicator" data-step="1"><span>1</span><span class="step-label">Tipo</span></div>
-                    <div class="step-indicator" data-step="2"><span>2</span><span class="step-label">Dati</span></div>
-                    <div class="step-indicator" data-step="3"><span>3</span><span class="step-label">Hero</span></div>
-                    <div class="step-indicator" data-step="4"><span>4</span><span class="step-label">Servizi</span></div>
-                    <div class="step-indicator" data-step="5"><span>5</span><span class="step-label">Staff</span></div>
-                    <div class="step-indicator" data-step="6"><span>6</span><span class="step-label">Prenotaz.</span></div>
-                    <div class="step-indicator" data-step="7"><span>7</span><span class="step-label">Orari</span></div>
-                    <div class="step-indicator" data-step="8"><span>8</span><span class="step-label">Galleria</span></div>
-                    <div class="step-indicator" data-step="9"><span>9</span><span class="step-label">Extra</span></div>
-                    <div class="step-indicator" data-step="10"><span>10</span><span class="step-label">Riepilogo</span></div>
-                </div>
-            </div>
-            
-            <!-- MESSAGGI DI RISULTATO -->
-            <div id="successMessage" class="success-message hidden">
-                <h2>Richiesta inviata con successo!</h2>
-                <p>Riceverai l'anteprima entro 48‑72 ore. Nessun pagamento richiesto fino ad approvazione.</p>
-                <p class="text-small mt-1">ID richiesta: <strong id="requestId"></strong></p>
-            </div>
-            <div id="errorMessage" class="error-box hidden">
-                <p id="errorText"></p>
-            </div>
-
-            <!-- FORM PRINCIPALE -->
-            <form id="setupForm" enctype="multipart/form-data">
-                <!-- STEP 0 - SOTTOCATEGORIA -->
-                <div class="step-panel active" data-step="1">
-                    <h2>🔧 Scegli la tua categoria</h2>
-                    <div class="form-group">
-                        <label for="subtype" class="required">Tipologia di attività</label>
-                        <select id="subtype" name="subtype" required>
-                            <option value="">Seleziona</option>
-                            <option value="barbiere">Barbiere</option>
-                            <option value="parrucchiere">Parrucchiere</option>
-                            <option value="estetica">Centro estetico</option>
-                            <option value="massaggi">Centro massaggi</option>
-                            <option value="tatuatore">Tatuatore</option>
-                            <option value="altro">Altro</option>
-                        </select>
-                        <div class="error-message" id="error_subtype"></div>
-                    </div>
-                    <div class="nav-buttons">
-                        <span></span>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 1 - DATI ATTIVITÀ -->
-                <div class="step-panel" data-step="2">
-                    <h2>📋 Dati dell'attività</h2>
-                    <div class="form-group">
-                        <label for="business_name" class="required">Nome attività</label>
-                        <input type="text" id="business_name" name="business_name" required>
-                        <div class="error-message" id="error_business_name"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="primary_email" class="required">Email di riferimento</label>
-                        <input type="email" id="primary_email" name="primary_email" required>
-                        <div class="error-message" id="error_primary_email"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="primary_phone">Telefono principale (consigliato)</label>
-                        <input type="tel" id="primary_phone" name="primary_phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Indirizzo completo (via, CAP, città)</label>
-                        <input type="text" id="address" name="address">
-                    </div>
-                    <div class="form-group">
-                        <label for="vat_number">Partita IVA (opzionale)</label>
-                        <input type="text" id="vat_number" name="vat_number">
-                    </div>
-                    <div class="form-group">
-                        <label for="website_existing">Sito web esistente (opzionale)</label>
-                        <input type="url" id="website_existing" name="website_existing" placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label for="instagram">Instagram (opzionale)</label>
-                        <input type="url" id="instagram" name="instagram" placeholder="https://instagram.com/...">
-                    </div>
-                    <div class="form-group">
-                        <label for="facebook">Facebook (opzionale)</label>
-                        <input type="url" id="facebook" name="facebook" placeholder="https://facebook.com/...">
-                    </div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 2 - HERO & PRESENTAZIONE -->
-                <div class="step-panel" data-step="3">
-                    <h2>✨ Hero e presentazione</h2>
-                    <div class="form-group">
-                        <label for="hero_title" class="required">Titolo principale (max 70 caratteri)</label>
-                        <input type="text" id="hero_title" name="hero_title" maxlength="70" required>
-                        <div class="text-small text-muted" id="hero_title_counter">0/70</div>
-                        <div class="error-message" id="error_hero_title"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="hero_subtitle">Sottotitolo (max 160 caratteri, opzionale)</label>
-                        <input type="text" id="hero_subtitle" name="hero_subtitle" maxlength="160">
-                    </div>
-                    <div class="form-group">
-                        <label for="hero_cta">Testo del bottone CTA (default: "Prenota ora")</label>
-                        <input type="text" id="hero_cta" name="hero_cta" value="Prenota ora">
-                    </div>
-                    <div class="form-group">
-                        <label>Logo (opzionale, consigliato)</label>
-                        <div class="upload-area" id="logo_upload_area">
-                            <input type="file" id="logo_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,image/svg+xml">
-                            <p>Clicca o trascina il tuo logo (SVG/PNG, max 2MB)</p>
-                        </div>
-                        <div class="preview-grid" id="logo_preview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="required">Foto principale (almeno una immagine richiesta)</label>
-                        <div class="upload-area" id="hero_image_upload_area">
-                            <input type="file" id="hero_image_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp">
-                            <p>Clicca o trascina la foto principale (min 1200x675, max 3MB)</p>
-                        </div>
-                        <div class="preview-grid" id="hero_image_preview"></div>
-                        <div class="error-message" id="error_hero_image"></div>
-                    </div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 3 - SERVIZI (CORE, ALMENO 1) -->
-                <div class="step-panel" data-step="4">
-                    <h2>💇 Servizi offerti</h2>
-                    <p class="text-muted">Inserisci almeno un servizio. Puoi aggiungerne quanti vuoi.</p>
-                    <div id="services_container"></div>
-                    <button type="button" id="aggiungi_servizio" class="btn-add-service">+ Aggiungi servizio</button>
-                    <div class="error-message" id="error_services"></div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 4 - STAFF (opzionale) -->
-                <div class="step-panel" data-step="5">
-                    <h2>👥 Il tuo team</h2>
-                    <p class="text-muted">Aggiungi i membri dello staff per aumentare la fiducia (massimo 4).</p>
-                    <div id="staff_container"></div>
-                    <button type="button" id="aggiungi_staff" class="btn-add-staff">+ Aggiungi membro</button>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 5 - PRENOTAZIONI -->
-                <div class="step-panel" data-step="6">
-                    <h2>📅 Prenotazioni</h2>
-                    <div class="form-group">
-                        <label>Accetti prenotazioni?</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="radio" name="booking_enabled" value="yes" checked> Sì
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="radio" name="booking_enabled" value="no"> No (solo walk-in)
-                            </label>
-                        </div>
-                    </div>
-                    <div id="booking_details">
-                        <div class="form-group">
-                            <label for="booking_type">Tipo di prenotazione</label>
-                            <select id="booking_type" name="booking_type">
-                                <option value="telefono">Telefono / WhatsApp</option>
-                                <option value="external_link">Link esterno (es. Calendly, Booksy)</option>
-                                <option value="widget_embed">Codice embed widget</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="booking_link_group">
-                            <label for="booking_link">Link prenotazione</label>
-                            <input type="url" id="booking_link" name="booking_link" placeholder="https://...">
-                        </div>
-                        <div class="form-group" id="booking_embed_group" style="display:none;">
-                            <label for="booking_embed">Codice embed</label>
-                            <textarea id="booking_embed" name="booking_embed" rows="4"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="whatsapp_booking" value="1"> Abilita prenotazioni via WhatsApp
-                            </label>
-                        </div>
-                        <div class="form-group" id="whatsapp_number_group">
-                            <label for="whatsapp_number">Numero WhatsApp per prenotazioni</label>
-                            <input type="tel" id="whatsapp_number" name="whatsapp_number">
-                        </div>
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="accept_walkins" value="1" checked> Accettiamo clienti senza prenotazione
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="cancellation_policy">Politica di cancellazione (breve, opzionale)</label>
-                            <textarea id="cancellation_policy" name="cancellation_policy" placeholder="es. disdetta entro 24h"></textarea>
-                        </div>
-                    </div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 6 - ORARI DI APERTURA -->
-                <div class="step-panel" data-step="7">
-                    <h2>⏰ Orari di apertura</h2>
-                    <button type="button" id="copyOrariBtn" class="copy-orari-btn">Copia orario feriali su sabato e domenica</button>
-                    <div id="orari_container">
-                        <!-- Giorni -->
-                        <div class="orari-row">
-                            <label>Lunedì</label>
-                            <input type="time" class="orari-apertura" data-day="lunedi_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="lunedi_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="lunedi"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="lunedi_note" placeholder="Note">
-                        </div>
-                        <div class="orari-row">
-                            <label>Martedì</label>
-                            <input type="time" class="orari-apertura" data-day="martedi_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="martedi_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="martedi"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="martedi_note" placeholder="Note">
-                        </div>
-                        <div class="orari-row">
-                            <label>Mercoledì</label>
-                            <input type="time" class="orari-apertura" data-day="mercoledi_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="mercoledi_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="mercoledi"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="mercoledi_note" placeholder="Note">
-                        </div>
-                        <div class="orari-row">
-                            <label>Giovedì</label>
-                            <input type="time" class="orari-apertura" data-day="giovedi_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="giovedi_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="giovedi"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="giovedi_note" placeholder="Note">
-                        </div>
-                        <div class="orari-row">
-                            <label>Venerdì</label>
-                            <input type="time" class="orari-apertura" data-day="venerdi_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="venerdi_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="venerdi"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="venerdi_note" placeholder="Note">
-                        </div>
-                        <div class="orari-row">
-                            <label>Sabato</label>
-                            <input type="time" class="orari-apertura" data-day="sabato_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="sabato_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="sabato"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="sabato_note" placeholder="Note">
-                        </div>
-                        <div class="orari-row">
-                            <label>Domenica</label>
-                            <input type="time" class="orari-apertura" data-day="domenica_apertura" value="09:00">
-                            <span>-</span>
-                            <input type="time" class="orari-chiusura" data-day="domenica_chiusura" value="18:00">
-                            <label><input type="checkbox" class="orari-chiuso" data-day="domenica"> Chiuso</label>
-                            <input type="text" class="orari-note" data-day="domenica_note" placeholder="Note">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="special_closures">Chiusure straordinarie (es. festività)</label>
-                        <textarea id="special_closures" name="special_closures" placeholder="es. chiuso dal 24 al 26 dicembre"></textarea>
-                    </div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 7 - GALLERIA -->
-                <div class="step-panel" data-step="8">
-                    <h2>🖼️ Galleria immagini</h2>
-                    <p class="text-muted">Carica almeno una foto del locale o dei servizi. Massimo 8 immagini.</p>
-                    <div class="form-group">
-                        <label class="required">Immagini (interno/esterno/servizi)</label>
-                        <div class="upload-area" id="gallery_upload_area">
-                            <input type="file" id="gallery_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp" multiple>
-                            <p>Clicca o trascina le foto (max 8, 3MB ciascuna)</p>
-                        </div>
-                        <div class="preview-grid" id="gallery_preview"></div>
-                        <div class="error-message" id="error_gallery"></div>
-                    </div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 8 - CONTENUTI ADDIZIONALI (OPZIONALI) -->
-                <div class="step-panel" data-step="9">
-                    <h2>✨ Contenuti extra (facoltativi)</h2>
-                    
-                    <h3>Testimonianze</h3>
-                    <div id="testimonials_container"></div>
-                    <button type="button" id="aggiungi_testimonianza" class="btn-add-service">+ Aggiungi testimonianza</button>
-
-                    <h3 class="mt-2">Offerte speciali</h3>
-                    <div id="offers_container"></div>
-                    <button type="button" id="aggiungi_offerta" class="btn-add-service">+ Aggiungi offerta</button>
-
-                    <h3 class="mt-2">FAQ</h3>
-                    <div id="faq_container"></div>
-                    <button type="button" id="aggiungi_faq" class="btn-add-service">+ Aggiungi FAQ</button>
-
-                    <h3 class="mt-2">Certificazioni / Riconoscimenti</h3>
-                    <div class="form-group">
-                        <label for="certifications_text">Testo certificazioni</label>
-                        <textarea id="certifications_text" name="certifications_text"></textarea>
-                    </div>
-                    <div class="upload-area" id="certifications_upload_area">
-                        <input type="file" id="certifications_input" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,application/pdf">
-                        <p>Carica file attestati (opzionale)</p>
-                    </div>
-                    <div class="preview-grid" id="certifications_preview"></div>
-
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <button type="button" class="btn next-step">Avanti</button>
-                    </div>
-                </div>
-
-                <!-- STEP 9 - RIEPILOGO E CONSENSO -->
-                <div class="step-panel" data-step="10">
-                    <h2>📋 Riepilogo e invio</h2>
-                    <div class="riepilogo-box" id="riepilogo"></div>
-                    <div class="form-group">
-                        <label class="checkbox-label required">
-                            <input type="checkbox" id="consenso" required>
-                            <span>Confermo che le informazioni sono corrette e autorizzo la pubblicazione dopo approvazione e pagamento.</span>
-                        </label>
-                        <div class="error-message" id="error_consenso"></div>
-                    </div>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-outline prev-step">Indietro</button>
-                        <!-- Honeypot anti-spam -->
-                        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-
-                        <!-- reCAPTCHA -->
-                        <div class="form-group">
-                            <div class="g-recaptcha" data-sitekey="6LfXEHssAAAAABM3Y61z_WPe2xM7bQg5MFMqbdO4"></div>
-                            <div class="error-message" id="error_recaptcha"></div>
-                        </div>
-                        <button type="submit" class="btn" id="submitBtn">Mostrami l'anteprima in 3 giorni</button>
-                    </div>
-                </div>
-            </form>
+        <div class="info-note">
+          <span>💡</span>
+          <span>Per i servizi alla persona, le foto dello staff e del locale fanno la differenza. Aggiungi il listino prezzi se lo hai pronto.</span>
         </div>
-    </main>
+      </div>
 
-    <footer>
-        <div class="container footer-content">
-            <p>© 2026 siteo · Configurazione Servizi alla persona</p>
-        </div>
-    </footer>
+      <!-- Right: checklist + CTA -->
+      <div class="checklist-card">
+        <h3>Prepara prima di aprire il form</h3>
+        <ul class="checklist">
+          <li>Nome e indirizzo dell'attività</li>
+          <li>Email di riferimento</li>
+          <li>Numero di telefono</li>
+          <li>Tipo di attività <span class="opt">(barbiere, estetista…)</span></li>
+          <li>Orari di apertura</li>
+          <li>Logo <span class="opt">(PNG / JPG)</span></li>
+          <li>Foto principale del locale</li>
+          <li>Lista servizi con prezzi</li>
+          <li>Foto del locale <span class="opt">(almeno 1)</span></li>
+          <li>Foto staff <span class="opt">(facoltativo)</span></li>
+          <li>Numero WhatsApp <span class="opt">(facoltativo)</span></li>
+          <li>Link Calendly / Booksy <span class="opt">(facoltativo)</span></li>
+          <li>Profili social <span class="opt">(facoltativo)</span></li>
+        </ul>
 
-    <script>
-        (function() {
-            // ---------- STATO GLOBALE ----------
-            let currentStep = 1;
-            const totalSteps = 10;
-            // Archivi file
-            let filesData = {
-                logo: null,
-                hero_image: null,
-                gallery: [],          // array di File
-                certifications: null
-            };
-            // Dati dinamici
-            let services = [];        // array di oggetti servizio
-            let staff = [];            // array di oggetti staff
-            let testimonials = [];
-            let offers = [];
-            let faqs = [];
+        <!-- ↓ Sostituisci con il tuo link Tally -->
+        <a href="https://tally.so/r/YYYYYYYY" target="_blank" rel="noopener" class="tally-btn">
+          Apri il form su Tally ↗
+        </a>
+        <p class="tally-note">⚡ Nessun pagamento · Si apre in una nuova scheda</p>
+      </div>
 
-            // Elementi DOM
-            const stepPanels = document.querySelectorAll('.step-panel');
-            const stepIndicators = document.querySelectorAll('.step-indicator');
-            const form = document.getElementById('setupForm');
-            const successMsg = document.getElementById('successMessage');
-            const errorMsg = document.getElementById('errorMessage');
-            const submitBtn = document.getElementById('submitBtn');
+    </div>
+  </div>
+</main>
 
-            // ---------- FUNZIONI DI SUPPORTO ----------
-            function showStep(step) {
-                stepPanels.forEach(p => p.classList.remove('active'));
-                document.querySelector(`.step-panel[data-step="${step}"]`).classList.add('active');
-                stepIndicators.forEach((ind, i) => {
-                    const s = i+1;
-                    ind.classList.remove('active', 'completed');
-                    if (s === step) ind.classList.add('active');
-                    else if (s < step) ind.classList.add('completed');
-                });
-                currentStep = step;
-                if (step === 10) generateRiepilogo();
-            }
+<footer style="background:var(--dark);padding:1.75rem 0">
+  <div class="container" style="text-align:center">
+    <p style="color:rgba(255,255,255,.28);font-size:.8125rem">© 2026 siteo · team@siteo.it</p>
+  </div>
+</footer>
 
-            function showError(fieldId, msg) {
-                const err = document.getElementById('error_' + fieldId);
-                if (err) err.textContent = msg;
-            }
-
-            function clearErrors() {
-                document.querySelectorAll('.error-message').forEach(e => e.textContent = '');
-            }
-
-            // Validazione step
-            function validateStep(step) {
-                clearErrors();
-                if (step === 1) {
-                    if (!document.getElementById('subtype').value) {
-                        showError('subtype', 'Seleziona una categoria');
-                        return false;
-                    }
-                }
-                if (step === 2) {
-                    const name = document.getElementById('business_name').value.trim();
-                    const email = document.getElementById('primary_email').value.trim();
-                    if (!name) { showError('business_name', 'Campo obbligatorio'); return false; }
-                    if (!email || !/^\S+@\S+\.\S+$/.test(email)) { showError('primary_email', 'Email non valida'); return false; }
-                }
-                if (step === 3) {
-                    const title = document.getElementById('hero_title').value.trim();
-                    if (!title) { showError('hero_title', 'Campo obbligatorio'); return false; }
-                    if (!filesData.hero_image) { showError('hero_image', 'Devi caricare almeno una foto principale'); return false; }
-                }
-                if (step === 4) {
-                    if (services.length === 0) {
-                        document.getElementById('error_services').textContent = 'Devi inserire almeno un servizio';
-                        return false;
-                    }
-                    // Verifica che ogni servizio abbia nome e descrizione
-                    for (let i=0; i<services.length; i++) {
-                        const s = services[i];
-                        if (!s.name || !s.desc) {
-                            alert(`Il servizio ${i+1} è incompleto (nome e descrizione obbligatori)`);
-                            return false;
-                        }
-                    }
-                }
-                if (step === 5) {
-                    // Staff opzionale, nessuna validazione obbligatoria
-                }
-                if (step === 6) {
-                    // Prenotazioni: se booking_enabled = yes e tipo = external_link, link obbligatorio? Decidiamo di non bloccare.
-                }
-                if (step === 7) {
-                    // Orari: nessuna validazione bloccante, ma consigliamo di compilare
-                }
-                if (step === 8) {
-                    if (filesData.gallery.length === 0) {
-                        showError('gallery', 'Carica almeno una foto del locale o servizio');
-                        return false;
-                    }
-                }
-                if (step === 9) {
-                    // Extra opzionali
-                }
-                return true;
-            }
-
-            // ---------- INIZIALIZZAZIONE UPLOAD (generica) ----------
-            function setupUpload(areaId, inputId, previewId, multiple = false, accept = 'image/*', maxSizeMB = 3, maxFiles = 8, targetKey) {
-                const area = document.getElementById(areaId);
-                const input = document.getElementById(inputId);
-                const preview = document.getElementById(previewId);
-                if (!area || !input || !preview) return;
-
-                function getFiles() {
-                    if (targetKey === 'gallery') return filesData.gallery;
-                    if (targetKey === 'logo') return filesData.logo ? [filesData.logo] : [];
-                    if (targetKey === 'hero_image') return filesData.hero_image ? [filesData.hero_image] : [];
-                    if (targetKey === 'certifications') return filesData.certifications ? [filesData.certifications] : [];
-                    return [];
-                }
-
-                function setFiles(newFiles) {
-                    if (targetKey === 'gallery') filesData.gallery = newFiles;
-                    else if (targetKey === 'logo') filesData.logo = newFiles[0] || null;
-                    else if (targetKey === 'hero_image') filesData.hero_image = newFiles[0] || null;
-                    else if (targetKey === 'certifications') filesData.certifications = newFiles[0] || null;
-                    updatePreview();
-                }
-
-                function updatePreview() {
-                    preview.innerHTML = '';
-                    const fileList = getFiles();
-                    fileList.forEach((file, index) => {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            const item = document.createElement('div');
-                            item.className = 'preview-item';
-                            if (file.type.startsWith('image/')) {
-                                item.innerHTML = `<img src="${e.target.result}" alt="anteprima"><button class="remove-file" data-index="${index}">×</button><div class="file-name">${file.name}</div>`;
-                            } else {
-                                item.innerHTML = `<div style="height:80px; display:flex; align-items:center; justify-content:center; background:#f0f0f0;">📄</div><button class="remove-file" data-index="${index}">×</button><div class="file-name">${file.name}</div>`;
-                            }
-                            preview.appendChild(item);
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                    // Aggiungi eventi rimozione
-                    preview.querySelectorAll('.remove-file').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const idx = btn.dataset.index;
-                            let current = getFiles();
-                            current.splice(idx, 1);
-                            setFiles(current);
-                        });
-                    });
-                }
-
-                area.addEventListener('click', () => input.click());
-                area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('dragover'); });
-                area.addEventListener('dragleave', () => area.classList.remove('dragover'));
-                area.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    area.classList.remove('dragover');
-                    const newFiles = Array.from(e.dataTransfer.files);
-                    handleFiles(newFiles);
-                });
-                input.addEventListener('change', (e) => {
-                    const newFiles = Array.from(e.target.files);
-                    handleFiles(newFiles);
-                    input.value = '';
-                });
-
-                function handleFiles(newFiles) {
-                    // filtro dimensioni
-                    const valid = newFiles.filter(f => f.size <= maxSizeMB * 1024 * 1024);
-                    if (valid.length !== newFiles.length) {
-                        alert(`Alcuni file superano il limite di ${maxSizeMB}MB.`);
-                    }
-                    if (multiple) {
-                        let current = getFiles();
-                        if (current.length + valid.length > maxFiles) {
-                            alert(`Massimo ${maxFiles} file.`);
-                            return;
-                        }
-                        setFiles([...current, ...valid]);
-                    } else {
-                        if (valid.length > 0) setFiles([valid[0]]);
-                    }
-                }
-            }
-
-            // ---------- SETUP UPLOAD ----------
-            setupUpload('logo_upload_area', 'logo_input', 'logo_preview', false, 'image/*', 2, 1, 'logo');
-            setupUpload('hero_image_upload_area', 'hero_image_input', 'hero_image_preview', false, 'image/*', 3, 1, 'hero_image');
-            setupUpload('gallery_upload_area', 'gallery_input', 'gallery_preview', true, 'image/*', 3, 8, 'gallery');
-            setupUpload('certifications_upload_area', 'certifications_input', 'certifications_preview', false, '*/*', 3, 1, 'certifications');
-
-            // ---------- SERVIZI DINAMICI ----------
-            function renderServices() {
-                const container = document.getElementById('services_container');
-                container.innerHTML = '';
-                services.forEach((s, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'service-item';
-                    div.innerHTML = `
-                        <button type="button" class="remove-service" data-index="${idx}">×</button>
-                        <div class="form-group">
-                            <label>Nome servizio *</label>
-                            <input type="text" class="service-name" data-index="${idx}" value="${s.name || ''}" placeholder="es. Taglio uomo">
-                        </div>
-                        <div class="form-group">
-                            <label>Breve descrizione *</label>
-                            <textarea class="service-desc" data-index="${idx}" placeholder="es. Taglio con lavaggio e asciugatura">${s.desc || ''}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Prezzo (opzionale, testo libero)</label>
-                            <input type="text" class="service-price" data-index="${idx}" value="${s.price || ''}" placeholder="es. 25€ / Prezzo su richiesta">
-                        </div>
-                        <div class="form-group">
-                            <label>Durata (opzionale)</label>
-                            <input type="text" class="service-duration" data-index="${idx}" value="${s.duration || ''}" placeholder="es. 45 min">
-                        </div>
-                        <div class="checkbox-label">
-                            <input type="checkbox" class="service-featured" data-index="${idx}" ${s.featured ? 'checked' : ''}> Evidenzia questo servizio
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-                // Eventi per i campi dinamici
-                document.querySelectorAll('.service-name').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        services[idx].name = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.service-desc').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        services[idx].desc = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.service-price').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        services[idx].price = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.service-duration').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        services[idx].duration = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.service-featured').forEach(inp => {
-                    inp.addEventListener('change', (e) => {
-                        const idx = e.target.dataset.index;
-                        services[idx].featured = e.target.checked;
-                    });
-                });
-                document.querySelectorAll('.remove-service').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const idx = e.target.dataset.index;
-                        services.splice(idx, 1);
-                        renderServices();
-                    });
-                });
-            }
-
-            document.getElementById('aggiungi_servizio').addEventListener('click', () => {
-                services.push({ name: '', desc: '', price: '', duration: '', featured: false });
-                renderServices();
-            });
-
-            // ---------- STAFF ----------
-            function renderStaff() {
-                const container = document.getElementById('staff_container');
-                container.innerHTML = '';
-                staff.forEach((s, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'staff-item';
-                    div.innerHTML = `
-                        <button type="button" class="remove-staff" data-index="${idx}">×</button>
-                        <div class="form-group">
-                            <label>Nome e cognome</label>
-                            <input type="text" class="staff-name" data-index="${idx}" value="${s.name || ''}">
-                        </div>
-                        <div class="form-group">
-                            <label>Ruolo</label>
-                            <input type="text" class="staff-role" data-index="${idx}" value="${s.role || ''}" placeholder="es. Barbiere senior">
-                        </div>
-                        <div class="form-group">
-                            <label>Breve bio (una riga)</label>
-                            <input type="text" class="staff-bio" data-index="${idx}" value="${s.bio || ''}">
-                        </div>
-                        <div class="form-group">
-                            <label>Foto (opzionale)</label>
-                            <input type="file" class="staff-photo" data-index="${idx}" accept="image/jpeg,image/png,image/webp">
-                            ${s.photo ? '<span>File caricato</span>' : ''}
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-                // Gestione input e file (semplificata, non salviamo il file in questo esempio)
-                document.querySelectorAll('.staff-name').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        staff[idx].name = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.staff-role').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        staff[idx].role = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.staff-bio').forEach(inp => {
-                    inp.addEventListener('input', (e) => {
-                        const idx = e.target.dataset.index;
-                        staff[idx].bio = e.target.value;
-                    });
-                });
-                document.querySelectorAll('.remove-staff').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const idx = e.target.dataset.index;
-                        staff.splice(idx, 1);
-                        renderStaff();
-                    });
-                });
-            }
-
-            document.getElementById('aggiungi_staff').addEventListener('click', () => {
-                if (staff.length < 4) {
-                    staff.push({ name: '', role: '', bio: '', photo: null });
-                    renderStaff();
-                } else {
-                    alert('Massimo 4 membri dello staff');
-                }
-            });
-
-            // ---------- TESTIMONIANZE, OFFERTE, FAQ (semplificate) ----------
-            function renderTestimonials() {
-                const container = document.getElementById('testimonials_container');
-                container.innerHTML = '';
-                testimonials.forEach((t, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'service-item';
-                    div.innerHTML = `
-                        <button type="button" class="remove-testimonial" data-index="${idx}">×</button>
-                        <div class="form-group"><label>Testo</label><textarea class="testimonial-text" data-index="${idx}">${t.text || ''}</textarea></div>
-                        <div class="form-group"><label>Autore</label><input type="text" class="testimonial-author" data-index="${idx}" value="${t.author || ''}"></div>
-                    `;
-                    container.appendChild(div);
-                });
-                // eventi...
-            }
-            document.getElementById('aggiungi_testimonianza').addEventListener('click', () => {
-                testimonials.push({ text: '', author: '' });
-                renderTestimonials();
-            });
-
-            function renderOffers() {
-                const container = document.getElementById('offers_container');
-                container.innerHTML = '';
-                offers.forEach((o, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'service-item';
-                    div.innerHTML = `
-                        <button type="button" class="remove-offer" data-index="${idx}">×</button>
-                        <div class="form-group"><label>Titolo offerta</label><input type="text" class="offer-title" data-index="${idx}" value="${o.title || ''}"></div>
-                        <div class="form-group"><label>Descrizione</label><textarea class="offer-desc" data-index="${idx}">${o.desc || ''}</textarea></div>
-                        <div class="form-group"><label>Validità</label><input type="text" class="offer-validity" data-index="${idx}" value="${o.validity || ''}"></div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-            document.getElementById('aggiungi_offerta').addEventListener('click', () => {
-                offers.push({ title: '', desc: '', validity: '' });
-                renderOffers();
-            });
-
-            function renderFaq() {
-                const container = document.getElementById('faq_container');
-                container.innerHTML = '';
-                faqs.forEach((f, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'service-item';
-                    div.innerHTML = `
-                        <button type="button" class="remove-faq" data-index="${idx}">×</button>
-                        <div class="form-group"><label>Domanda</label><input type="text" class="faq-question" data-index="${idx}" value="${f.question || ''}"></div>
-                        <div class="form-group"><label>Risposta</label><textarea class="faq-answer" data-index="${idx}">${f.answer || ''}</textarea></div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-            document.getElementById('aggiungi_faq').addEventListener('click', () => {
-                faqs.push({ question: '', answer: '' });
-                renderFaq();
-            });
-
-            // ---------- PRENOTAZIONI TOGGLE ----------
-            const bookingEnabledRadios = document.querySelectorAll('input[name="booking_enabled"]');
-            const bookingDetails = document.getElementById('booking_details');
-            function toggleBooking() {
-                const val = document.querySelector('input[name="booking_enabled"]:checked')?.value;
-                if (val === 'no') {
-                    bookingDetails.style.display = 'none';
-                } else {
-                    bookingDetails.style.display = 'block';
-                }
-            }
-            bookingEnabledRadios.forEach(r => r.addEventListener('change', toggleBooking));
-            toggleBooking();
-
-            const bookingType = document.getElementById('booking_type');
-            const linkGroup = document.getElementById('booking_link_group');
-            const embedGroup = document.getElementById('booking_embed_group');
-            function toggleBookingType() {
-                const type = bookingType.value;
-                if (type === 'external_link') {
-                    linkGroup.style.display = 'block';
-                    embedGroup.style.display = 'none';
-                } else if (type === 'widget_embed') {
-                    linkGroup.style.display = 'none';
-                    embedGroup.style.display = 'block';
-                } else {
-                    linkGroup.style.display = 'none';
-                    embedGroup.style.display = 'none';
-                }
-            }
-            bookingType.addEventListener('change', toggleBookingType);
-            toggleBookingType();
-
-            // ---------- COPIA ORARI ----------
-            document.getElementById('copyOrariBtn').addEventListener('click', () => {
-                const lunA = document.querySelector('.orari-apertura[data-day="lunedi_apertura"]')?.value;
-                const lunC = document.querySelector('.orari-chiusura[data-day="lunedi_chiusura"]')?.value;
-                const lunChiuso = document.querySelector('.orari-chiuso[data-day="lunedi"]')?.checked;
-                const sabA = document.querySelector('.orari-apertura[data-day="sabato_apertura"]');
-                const sabC = document.querySelector('.orari-chiusura[data-day="sabato_chiusura"]');
-                const sabChiuso = document.querySelector('.orari-chiuso[data-day="sabato"]');
-                const domA = document.querySelector('.orari-apertura[data-day="domenica_apertura"]');
-                const domC = document.querySelector('.orari-chiusura[data-day="domenica_chiusura"]');
-                const domChiuso = document.querySelector('.orari-chiuso[data-day="domenica"]');
-                if (sabA) sabA.value = lunA || '';
-                if (sabC) sabC.value = lunC || '';
-                if (sabChiuso) sabChiuso.checked = !!lunChiuso;
-                if (domA) domA.value = lunA || '';
-                if (domC) domC.value = lunC || '';
-                if (domChiuso) domChiuso.checked = !!lunChiuso;
-            });
-
-            // ---------- CONTATORE TITOLO ----------
-            document.getElementById('hero_title').addEventListener('input', function() {
-                document.getElementById('hero_title_counter').textContent = this.value.length + '/70';
-            });
-
-            // ---------- NAVIGAZIONE ----------
-            document.querySelectorAll('.next-step').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (validateStep(currentStep)) {
-                        if (currentStep < totalSteps) showStep(currentStep + 1);
-                    }
-                });
-            });
-            document.querySelectorAll('.prev-step').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (currentStep > 1) showStep(currentStep - 1);
-                });
-            });
-
-            // ---------- GENERA RIEPILOGO ----------
-            function generateRiepilogo() {
-                const business = document.getElementById('business_name').value;
-                const email = document.getElementById('primary_email').value;
-                const heroTitle = document.getElementById('hero_title').value;
-                let html = '<div class="riepilogo-section"><h3>Attività</h3>';
-                html += `<p><strong>Nome:</strong> ${business}</p>`;
-                html += `<p><strong>Email:</strong> ${email}</p>`;
-                html += `<p><strong>Servizi inseriti:</strong> ${services.length}</p>`;
-                html += `<p><strong>Foto gallery:</strong> ${filesData.gallery.length}</p>`;
-                html += '</div>';
-                if (services.length > 0) {
-                    html += '<div class="riepilogo-section"><h3>Primi servizi</h3>';
-                    services.slice(0, 3).forEach(s => {
-                        html += `<p><strong>${s.name || '?'}:</strong> ${s.desc || ''} ${s.price ? ' - ' + s.price : ''}</p>`;
-                    });
-                    html += '</div>';
-                }
-                document.getElementById('riepilogo').innerHTML = html;
-            }
-
-            // ---------- INVIO FORM (simulato) ----------
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const recaptchaResponse = grecaptcha.getResponse();
-                if (!recaptchaResponse) {
-                    document.getElementById('error_recaptcha').textContent = 'Completa la verifica reCAPTCHA';
-                    return;
-                }
-                if (!document.getElementById('consenso').checked) {
-                    document.getElementById('error_consenso').textContent = 'Devi accettare il consenso.';
-                    return;
-                }
-                // Validazioni finali
-                if (!validateStep(2) || !validateStep(3) || !validateStep(4) || !validateStep(8)) {
-                    alert('Compila correttamente tutti i campi obbligatori.');
-                    return;
-                }
-
-                submitBtn.disabled = true;
-                submitBtn.classList.add('btn-loading');
-
-                // Fetch - Formspree
-                try {
-                    const response = await fetch('https://formspree.io/f/mreadnbp', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    form.classList.add('hidden');
-                    document.getElementById('requestId').textContent = data.id || 'SRV' + Math.floor(Math.random()*10000);
-                    successMsg.classList.remove('hidden');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                throw new Error(data.error || 'Errore durante l\'invio');
-                }
-                } catch (err) {
-                document.getElementById('errorText').textContent = err.message;
-                errorMsg.classList.remove('hidden');
-                } finally {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('btn-loading');
-            }
-            });
-
-            // Inizializza render vuoti
-            renderServices();
-            renderStaff();
-            renderTestimonials();
-            renderOffers();
-            renderFaq();
-        })();
-    </script>
 </body>
 </html>
