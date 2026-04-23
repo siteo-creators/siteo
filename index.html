@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5SB1X900K4"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5SB1X900K4');</script>
+  <script>
+    function loadAnalytics() {
+      var script = document.createElement("script");
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-5SB1X900K4";
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-5SB1X900K4', {
+        'anonymize_ip': true
+      });
+    }
+  </script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Siteo: sito web one-page per la tua attività locale. Preview gratuita, paghi solo se ti piace. Sviluppo 200€ · Gestione tecnica 70€/anno.">
+  <meta name="description"
+    content="Siteo: sito web one-page per la tua attività locale. Preview gratuita, paghi solo se ti piace. Sviluppo 200€ · Gestione tecnica 70€/anno.">
   <title>siteo — Siti web per attività locali</title>
 
   <link rel="icon" type="image/png" href="public/assets/img/fav.png" sizes="32x32">
@@ -15,486 +31,544 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="src/css/main.css">
 </head>
+
 <body>
 
-<!-- ─── HEADER ─────────────────────────────────── -->
-<header id="site-header">
-  <div class="container header-container">
-    <a href="index.html" class="logo">siteo</a>
+  <!-- ─── HEADER ─────────────────────────────────── -->
+  <header id="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">siteo</a>
 
-    <nav class="nav-desktop" aria-label="Navigazione principale">
-      <a href="#perche">Perché</a>
-      <a href="#incluso">Incluso</a>
+      <nav class="nav-desktop" aria-label="Navigazione principale">
+        <a href="#perche">Perché</a>
+        <a href="#incluso">Incluso</a>
+        <a href="#prezzi">Piani</a>
+        <a href="#funziona">Come funziona</a>
+        <a href="#esempi">Esempi</a>
+        <a href="#modifiche">Modifiche</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="pages/setups_config.html" class="btn btn-gold btn-small">Richiedi preview gratis</a>
+      </div>
+
+      <button class="mobile-menu-btn" id="menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav>
+      <a href="#perche">Perché siteo</a>
+      <a href="#incluso">Cosa include</a>
       <a href="#prezzi">Piani</a>
       <a href="#funziona">Come funziona</a>
       <a href="#esempi">Esempi</a>
       <a href="#modifiche">Modifiche</a>
     </nav>
-
-    <div class="header-actions">
-      <a href="pages/setups_config.html" class="btn btn-gold btn-small">Richiedi preview gratis</a>
-    </div>
-
-    <button class="mobile-menu-btn" id="menu-btn" aria-label="Apri menu" aria-expanded="false">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
-  </div>
-</header>
-
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-  <nav>
-    <a href="#perche">Perché siteo</a>
-    <a href="#incluso">Cosa include</a>
-    <a href="#prezzi">Piani</a>
-    <a href="#funziona">Come funziona</a>
-    <a href="#esempi">Esempi</a>
-    <a href="#modifiche">Modifiche</a>
-  </nav>
-  <div class="mobile-actions">
-    <a href="pages/setups_config.html" class="btn btn-gold">Richiedi preview gratis</a>
-  </div>
-</div>
-
-<main>
-
-<!-- ─── HERO ───────────────────────────────────── -->
-<section class="hero" id="home">
-  <div class="container">
-    <div class="hero-content">
-      <p class="eyebrow" style="color:rgba(232,194,90,.85)">Siti web per attività locali</p>
-      <h1>Il tuo sito,<br><em class="text-gold">senza pensieri.</em></h1>
-      <p class="hero-subtitle">
-        Compila il form, in 2–3 giorni ricevi l'anteprima.<br>
-        Paghi solo se sei soddisfatto.
-      </p>
-      <a href="pages/setups_config.html" class="btn btn-gold btn-large">Richiedi la preview gratuita</a>
-      <p class="price-note">⚡ Nessun pagamento anticipato &nbsp;·&nbsp; Preview privata &nbsp;·&nbsp; Zero impegno</p>
+    <div class="mobile-actions">
+      <a href="pages/setups_config.html" class="btn btn-gold">Richiedi preview gratis</a>
     </div>
   </div>
-</section>
 
-<!-- ─── PERCHÉ ─────────────────────────────────── -->
-<section id="perche">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Perché sceglierci</p>
-      <h2>Trasparente fin dall'inizio</h2>
-      <div class="gold-sep"></div>
-      <p>Semplice, diretto, pensato per chi non ha tempo da perdere.</p>
-    </div>
-    <div class="features-grid stagger">
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>Preview prima di tutto</h3>
-        <p>Vedi il sito finito prima di pagare. Se non ti piace, non succede nulla.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📦</div>
-        <h3>Sviluppo a 200€</h3>
-        <p>Una spesa una tantum per avere un sito professionale su misura.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">✏️</div>
-        <h3>1 modifica gratis/anno</h3>
-        <p>Con l'abbonamento tecnico aggiorni testi, foto e orari quando vuoi.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <main>
 
-<!-- ─── INCLUSO ────────────────────────────────── -->
-<section id="incluso" style="background:var(--bg-alt)">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Cosa ottieni</p>
-      <h2>Tutto quello che ti serve</h2>
-      <div class="gold-sep"></div>
-      <p>Il sito, e la possibilità di affidarci anche la gestione tecnica.</p>
-    </div>
-
-    <div class="included-grid stagger">
-      <div class="included-box">
-        <h3>Nel sito · 200€</h3>
-        <ul class="check-list">
-          <li>Sito one-page veloce e mobile-friendly</li>
-          <li>Design personalizzato sui tuoi contenuti</li>
-          <li>Ottimizzazione SEO di base</li>
-          <li>Modulo contatti funzionante</li>
-          <li>Link ai tuoi social</li>
-        </ul>
-      </div>
-      <div class="included-box">
-        <h3>Gestione tecnica · 70€/anno</h3>
-        <ul class="check-list">
-          <li>Dominio .it o .com incluso</li>
-          <li>Hosting performante con SSL</li>
-          <li>Manutenzione e aggiornamenti tecnici</li>
-          <li>1 modifica di contenuto <strong>gratis</strong>/anno</li>
-          <li>Report visite trimestrale</li>
-        </ul>
-      </div>
-      <div class="included-box" style="grid-column:1/-1">
-        <h3>Non incluso</h3>
-        <ul class="check-list excluded">
-          <li>E-commerce complessi</li>
-          <li>Sistemi di prenotazione integrati</li>
-          <li>Social media management</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── PREZZI ─────────────────────────────────── -->
-<section id="prezzi">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Piani</p>
-      <h2>Chiari, senza sorprese</h2>
-      <div class="gold-sep"></div>
-      <p>Acquisti il sito una volta. Poi scegli se affidarci la gestione tecnica.</p>
-    </div>
-
-    <div class="pricing-grid stagger">
-      <div class="pricing-card">
-        <p class="plan-name">Realizzazione sito</p>
-        <div class="plan-price">200€</div>
-        <p class="plan-note">Una tantum</p>
-        <ul class="plan-features">
-          <li>Sito one-page professionale</li>
-          <li>Design personalizzato</li>
-          <li>SEO di base</li>
-          <li>Modulo contatti</li>
-          <li>Consegna in 7–10 giorni</li>
-        </ul>
-        <a href="pages/setups_config.html" class="btn btn-outline" style="width:100%;justify-content:center">Richiedi preview</a>
-      </div>
-      <div class="pricing-card featured">
-        <p class="plan-kicker">Consigliato</p>
-        <p class="plan-name">Gestione tecnica</p>
-        <div class="plan-price">70€ <small>/anno</small></div>
-        <p class="plan-note">Dopo l'acquisto del sito</p>
-        <ul class="plan-features">
-          <li>Dominio .it o .com incluso</li>
-          <li>Hosting e certificato SSL</li>
-          <li>1 modifica gratuita/anno</li>
-          <li>Report visite trimestrale</li>
-          <li>Assistenza via email</li>
-        </ul>
-        <a href="pages/setups_config.html" class="btn btn-gold" style="width:100%;justify-content:center">Inizia con la preview</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── MODIFICHE ──────────────────────────────── -->
-<section id="modifiche" style="background:var(--bg-alt)">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Modifiche</p>
-      <h2>Semplici e veloci</h2>
-      <div class="gold-sep"></div>
-      <p>Con la Gestione Tecnica la prima modifica Standard è gratis ogni anno. Scegli la priorità che ti serve.</p>
-    </div>
-
-    <table class="mod-table reveal">
-      <tr>
-        <td>🟢 Standard</td>
-        <td style="color:var(--ink-3);font-size:.875rem">entro 30 giorni</td>
-        <td>10€</td>
-      </tr>
-      <tr>
-        <td>🟡 Veloce</td>
-        <td style="color:var(--ink-3);font-size:.875rem">entro 15 giorni</td>
-        <td>20€</td>
-      </tr>
-      <tr>
-        <td>🔴 Business</td>
-        <td style="color:var(--ink-3);font-size:.875rem">entro 72h lavorative</td>
-        <td>30€</td>
-      </tr>
-    </table>
-
-    <div class="text-center mt-3 reveal">
-      <p class="text-muted text-small" style="margin-bottom:1.25rem">Tutte le richieste via form dedicato.</p>
-      <a href="pages/edit_request.html" class="btn btn-outline">Richiedi una modifica</a>
-    </div>
-  </div>
-</section>
-
-<!-- ─── COME FUNZIONA ──────────────────────────── -->
-<section id="funziona">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Come funziona</p>
-      <h2>Tre passi, zero rischi</h2>
-      <div class="gold-sep"></div>
-    </div>
-
-    <div class="steps-grid stagger">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Compila il form</h3>
-        <p>Inserisci i dati della tua attività e carica le foto. Non paghi nulla.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Ricevi l'anteprima</h3>
-        <p>In 2–3 giorni il sito è pronto e ti mandiamo un link privato.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Scegli se attivarlo</h3>
-        <p>Se ti piace, acquisti il sito e scegli se aggiungere la Gestione Tecnica.</p>
-      </div>
-    </div>
-
-    <div class="step-finale reveal">
-      <h3>E poi?</h3>
-      <p>Con l'abbonamento ci pensiamo noi: hosting, dominio, sicurezza, modifiche. Il tuo sito sempre online, sempre aggiornato.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ─── ESEMPI ─────────────────────────────────── -->
-<section id="esempi" style="background:var(--bg-alt)">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Esempi</p>
-      <h2>Siti che abbiamo realizzato</h2>
-      <div class="gold-sep"></div>
-      <p>Ogni sito è personalizzato con i tuoi colori, foto e contenuti.</p>
-    </div>
-
-    <div class="esempi-grid stagger">
-      <div class="esempio-card">
-        <div class="esempio-img">
-          <img src="public/assets/img/esempiopizzeria.jpeg" alt="Template pizzeria" loading="lazy"
-               onerror="this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='3rem';this.parentElement.innerHTML='🍕';">
-        </div>
-        <div class="esempio-body">
-          <span class="esempio-tag">Pizzeria</span>
-          <h4>Pizzeria tradizionale</h4>
-          <p>Menù, orari, zona consegna.</p>
+    <!-- ─── HERO ───────────────────────────────────── -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <p class="eyebrow" style="color:rgba(232,194,90,.85)">Siti web per attività locali</p>
+          <h1>Il tuo sito,<br><em class="text-gold">senza pensieri.</em></h1>
+          <p class="hero-subtitle">
+            Compila il form, in 2–3 giorni ricevi l'anteprima.<br>
+            Paghi solo se sei soddisfatto.
+          </p>
+          <a href="pages/setups_config.html" class="btn btn-gold btn-large">Richiedi la preview gratuita</a>
+          <p class="price-note">⚡ Nessun pagamento anticipato &nbsp;·&nbsp; Preview privata &nbsp;·&nbsp; Zero impegno
+          </p>
         </div>
       </div>
-      <div class="esempio-card">
-        <div class="esempio-img">
-          <img src="public/assets/img/esempiobarberia.jpeg" alt="Template barbiere" loading="lazy"
-               onerror="this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='3rem';this.parentElement.innerHTML='✂️';">
+    </section>
+
+    <!-- ─── PERCHÉ ─────────────────────────────────── -->
+    <section id="perche">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Perché sceglierci</p>
+          <h2>Trasparente fin dall'inizio</h2>
+          <div class="gold-sep"></div>
+          <p>Semplice, diretto, pensato per chi non ha tempo da perdere.</p>
         </div>
-        <div class="esempio-body">
-          <span class="esempio-tag">Barbiere</span>
-          <h4>Barber shop</h4>
-          <p>Servizi, prezzi, galleria lavori.</p>
+        <div class="features-grid stagger">
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Preview prima di tutto</h3>
+            <p>Vedi il sito finito prima di pagare. Se non ti piace, non succede nulla.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h3>Sviluppo a 200€</h3>
+            <p>Una spesa una tantum per avere un sito professionale su misura.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✏️</div>
+            <h3>1 modifica gratis/anno</h3>
+            <p>Con l'abbonamento tecnico aggiorni testi, foto e orari quando vuoi.</p>
+          </div>
         </div>
       </div>
-      <div class="esempio-card">
-        <div class="esempio-img">
-          <img src="public/assets/img/esempiosushi.jpeg" alt="Template sushi" loading="lazy"
-               onerror="this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='3rem';this.parentElement.innerHTML='🍣';">
+    </section>
+
+    <!-- ─── INCLUSO ────────────────────────────────── -->
+    <section id="incluso" style="background:var(--bg-alt)">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Cosa ottieni</p>
+          <h2>Tutto quello che ti serve</h2>
+          <div class="gold-sep"></div>
+          <p>Il sito, e la possibilità di affidarci anche la gestione tecnica.</p>
         </div>
-        <div class="esempio-body">
-          <span class="esempio-tag">Sushi</span>
-          <h4>Ristorante etnico</h4>
-          <p>All-you-can-eat, orari, contatti.</p>
+
+        <div class="included-grid stagger">
+          <div class="included-box">
+            <h3>Nel sito · 200€</h3>
+            <ul class="check-list">
+              <li>Sito one-page veloce e mobile-friendly</li>
+              <li>Design personalizzato sui tuoi contenuti</li>
+              <li>Ottimizzazione SEO di base</li>
+              <li>Modulo contatti funzionante</li>
+              <li>Link ai tuoi social</li>
+            </ul>
+          </div>
+          <div class="included-box">
+            <h3>Gestione tecnica · 70€/anno</h3>
+            <ul class="check-list">
+              <li>Dominio .it o .com incluso</li>
+              <li>Hosting performante con SSL</li>
+              <li>Manutenzione e aggiornamenti tecnici</li>
+              <li>1 modifica di contenuto <strong>gratis</strong>/anno</li>
+              <li>Report visite trimestrale</li>
+            </ul>
+          </div>
+          <div class="included-box" style="grid-column:1/-1">
+            <h3>Non incluso</h3>
+            <ul class="check-list excluded">
+              <li>E-commerce complessi</li>
+              <li>Sistemi di prenotazione integrati</li>
+              <li>Social media management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PREZZI ─────────────────────────────────── -->
+    <section id="prezzi">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Piani</p>
+          <h2>Chiari, senza sorprese</h2>
+          <div class="gold-sep"></div>
+          <p>Acquisti il sito una volta. Poi scegli se affidarci la gestione tecnica.</p>
+        </div>
+
+        <div class="pricing-grid stagger">
+          <div class="pricing-card">
+            <p class="plan-name">Realizzazione sito</p>
+            <div class="plan-price">200€</div>
+            <p class="plan-note">Una tantum</p>
+            <ul class="plan-features">
+              <li>Sito one-page professionale</li>
+              <li>Design personalizzato</li>
+              <li>SEO di base</li>
+              <li>Modulo contatti</li>
+              <li>Consegna in 7–10 giorni</li>
+            </ul>
+            <a href="pages/setups_config.html" class="btn btn-outline"
+              style="width:100%;justify-content:center">Richiedi preview</a>
+          </div>
+          <div class="pricing-card featured">
+            <p class="plan-kicker">Consigliato</p>
+            <p class="plan-name">Gestione tecnica</p>
+            <div class="plan-price">70€ <small>/anno</small></div>
+            <p class="plan-note">Dopo l'acquisto del sito</p>
+            <ul class="plan-features">
+              <li>Dominio .it o .com incluso</li>
+              <li>Hosting e certificato SSL</li>
+              <li>1 modifica gratuita/anno</li>
+              <li>Report visite trimestrale</li>
+              <li>Assistenza via email</li>
+            </ul>
+            <a href="pages/setups_config.html" class="btn btn-gold" style="width:100%;justify-content:center">Inizia con
+              la preview</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── MODIFICHE ──────────────────────────────── -->
+    <section id="modifiche" style="background:var(--bg-alt)">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Modifiche</p>
+          <h2>Semplici e veloci</h2>
+          <div class="gold-sep"></div>
+          <p>Con la Gestione Tecnica la prima modifica Standard è gratis ogni anno. Scegli la priorità che ti serve.</p>
+        </div>
+
+        <table class="mod-table reveal">
+          <tr>
+            <td>🟢 Standard</td>
+            <td style="color:var(--ink-3);font-size:.875rem">entro 30 giorni</td>
+            <td>10€</td>
+          </tr>
+          <tr>
+            <td>🟡 Veloce</td>
+            <td style="color:var(--ink-3);font-size:.875rem">entro 15 giorni</td>
+            <td>20€</td>
+          </tr>
+          <tr>
+            <td>🔴 Business</td>
+            <td style="color:var(--ink-3);font-size:.875rem">entro 72h lavorative</td>
+            <td>30€</td>
+          </tr>
+        </table>
+
+        <div class="text-center mt-3 reveal">
+          <p class="text-muted text-small" style="margin-bottom:1.25rem">Tutte le richieste via form dedicato.</p>
+          <a href="pages/edit_request.html" class="btn btn-outline">Richiedi una modifica</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── COME FUNZIONA ──────────────────────────── -->
+    <section id="funziona">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Come funziona</p>
+          <h2>Tre passi, zero rischi</h2>
+          <div class="gold-sep"></div>
+        </div>
+
+        <div class="steps-grid stagger">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Compila il form</h3>
+            <p>Inserisci i dati della tua attività e carica le foto. Non paghi nulla.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Ricevi l'anteprima</h3>
+            <p>In 2–3 giorni il sito è pronto e ti mandiamo un link privato.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Scegli se attivarlo</h3>
+            <p>Se ti piace, acquisti il sito e scegli se aggiungere la Gestione Tecnica.</p>
+          </div>
+        </div>
+
+        <div class="step-finale reveal">
+          <h3>E poi?</h3>
+          <p>Con l'abbonamento ci pensiamo noi: hosting, dominio, sicurezza, modifiche. Il tuo sito sempre online,
+            sempre aggiornato.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ESEMPI ─────────────────────────────────── -->
+    <section id="esempi" style="background:var(--bg-alt)">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Esempi</p>
+          <h2>Siti che abbiamo realizzato</h2>
+          <div class="gold-sep"></div>
+          <p>Ogni sito è personalizzato con i tuoi colori, foto e contenuti.</p>
+        </div>
+
+        <div class="esempi-grid stagger">
+          <div class="esempio-card">
+            <div class="esempio-img">
+              <img src="public/assets/img/esempiopizzeria.jpeg" alt="Template pizzeria" loading="lazy"
+                onerror="this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='3rem';this.parentElement.innerHTML='🍕';">
+            </div>
+            <div class="esempio-body">
+              <span class="esempio-tag">Pizzeria</span>
+              <h4>Pizzeria tradizionale</h4>
+              <p>Menù, orari, zona consegna.</p>
+            </div>
+          </div>
+          <div class="esempio-card">
+            <div class="esempio-img">
+              <img src="public/assets/img/esempiobarberia.jpeg" alt="Template barbiere" loading="lazy"
+                onerror="this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='3rem';this.parentElement.innerHTML='✂️';">
+            </div>
+            <div class="esempio-body">
+              <span class="esempio-tag">Barbiere</span>
+              <h4>Barber shop</h4>
+              <p>Servizi, prezzi, galleria lavori.</p>
+            </div>
+          </div>
+          <div class="esempio-card">
+            <div class="esempio-img">
+              <img src="public/assets/img/esempiosushi.jpeg" alt="Template sushi" loading="lazy"
+                onerror="this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='3rem';this.parentElement.innerHTML='🍣';">
+            </div>
+            <div class="esempio-body">
+              <span class="esempio-tag">Sushi</span>
+              <h4>Ristorante etnico</h4>
+              <p>All-you-can-eat, orari, contatti.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ORIGINI ─────────────────────────────────── -->
+    <section id="origini">
+      <div class="container">
+        <div class="origins-inner reveal">
+          <p class="eyebrow">Il progetto</p>
+          <h2>Nati all'Università di Trento</h2>
+          <div class="gold-sep"></div>
+          <p class="lead">Siamo un team di studenti dell'Università di Trento con un obiettivo preciso: dare agli
+            imprenditori italiani una presenza online efficace, a un prezzo onesto, senza complicazioni.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FAQ ───────────────────────────────────────  -->
+    <section id="faq" style="background:var(--bg-alt)">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="eyebrow">Dubbi?</p>
+          <h2>Domande frequenti</h2>
+          <div class="gold-sep"></div>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-q">
+              Devo pagare per ricevere l'anteprima?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">No. Compili il form, noi prepariamo il sito e ti inviamo un link privato. Paghi
+                solo se decidi di attivarlo.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              Cosa succede se non rinnovo l'abbonamento?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Il sito andrà offline. Il dominio rimane di tua proprietà e ti aiutiamo a
+                trasferirlo gratuitamente.</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              Come faccio a richiedere una modifica?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Dalla pagina <a href="pages/edit_request.html" style="color:var(--gold)">Richiedi
+                  modifica</a>. Compili il form su Tally, scegli la priorità e noi la eseguiamo nei tempi concordati.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              Per quali attività realizzate siti?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Ci specializziamo in Food &amp; Beverage (ristoranti, pizzerie, bar, sushi, pub…)
+                e Servizi alla persona (barbieri, parrucchieri, centri estetici, tatuatori…).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ─────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">siteo</div>
+          <p class="footer-about">Siti web one-page per attività locali.<br>Semplici, trasparenti, senza sorprese.</p>
+          <p style="margin-top:1rem"><a href="mailto:team@siteo.it"
+              style="color:var(--gold-2);font-size:.875rem">team@siteo.it</a></p>
+        </div>
+        <div class="footer-col">
+          <h4>Servizio</h4>
+          <a href="#incluso">Cosa include</a>
+          <a href="#prezzi">Piani</a>
+          <a href="#funziona">Come funziona</a>
+          <a href="#esempi">Esempi</a>
+          <a href="pages/edit_request.html">Richiedi modifica</a>
+        </div>
+        <div class="footer-col">
+          <h4>Inizia</h4>
+          <a href="pages/setups_config.html">Richiedi preview gratuita</a>
+          <a href="pages/setups/food_beverage.html">Form Food &amp; Beverage</a>
+          <a href="pages/setups/person_services.html">Form Servizi alla persona</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 siteo &nbsp;·&nbsp; team@siteo.it</span>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Termini</a>
+          <a href="#">Cookie</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- ─── ORIGINI ─────────────────────────────────── -->
-<section id="origini">
-  <div class="container">
-    <div class="origins-inner reveal">
-      <p class="eyebrow">Il progetto</p>
-      <h2>Nati all'Università di Trento</h2>
-      <div class="gold-sep"></div>
-      <p class="lead">Siamo un team di studenti dell'Università di Trento con un obiettivo preciso: dare agli imprenditori italiani una presenza online efficace, a un prezzo onesto, senza complicazioni.</p>
-    </div>
-  </div>
-</section>
+  <!-- ─── SCRIPTS ────────────────────────────────── -->
+  <script src="https://fixgdpr.com/banner/6bacfc0e-e5db-4b53-8739-ae1f47d7359e.js" async></script>
+  <script>
+    (function () {
+      'use strict';
 
-<!-- ─── FAQ ───────────────────────────────────────  -->
-<section id="faq" style="background:var(--bg-alt)">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="eyebrow">Dubbi?</p>
-      <h2>Domande frequenti</h2>
-      <div class="gold-sep"></div>
-    </div>
-
-    <div class="faq-list reveal">
-      <div class="faq-item">
-        <button class="faq-q">
-          Devo pagare per ricevere l'anteprima?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">No. Compili il form, noi prepariamo il sito e ti inviamo un link privato. Paghi solo se decidi di attivarlo.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          Cosa succede se non rinnovo l'abbonamento?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">Il sito andrà offline. Il dominio rimane di tua proprietà e ti aiutiamo a trasferirlo gratuitamente.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          Come faccio a richiedere una modifica?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">Dalla pagina <a href="pages/edit_request.html" style="color:var(--gold)">Richiedi modifica</a>. Compili il form su Tally, scegli la priorità e noi la eseguiamo nei tempi concordati.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">
-          Per quali attività realizzate siti?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">Ci specializziamo in Food &amp; Beverage (ristoranti, pizzerie, bar, sushi, pub…) e Servizi alla persona (barbieri, parrucchieri, centri estetici, tatuatori…).</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<!-- ─── FOOTER ─────────────────────────────────── -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo">siteo</div>
-        <p class="footer-about">Siti web one-page per attività locali.<br>Semplici, trasparenti, senza sorprese.</p>
-        <p style="margin-top:1rem"><a href="mailto:team@siteo.it" style="color:var(--gold-2);font-size:.875rem">team@siteo.it</a></p>
-      </div>
-      <div class="footer-col">
-        <h4>Servizio</h4>
-        <a href="#incluso">Cosa include</a>
-        <a href="#prezzi">Piani</a>
-        <a href="#funziona">Come funziona</a>
-        <a href="#esempi">Esempi</a>
-        <a href="pages/edit_request.html">Richiedi modifica</a>
-      </div>
-      <div class="footer-col">
-        <h4>Inizia</h4>
-        <a href="pages/setups_config.html">Richiedi preview gratuita</a>
-        <a href="pages/setups/food_beverage.html">Form Food &amp; Beverage</a>
-        <a href="pages/setups/person_services.html">Form Servizi alla persona</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 siteo &nbsp;·&nbsp; team@siteo.it</span>
-      <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Termini</a>
-        <a href="#">Cookie</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- ─── SCRIPTS ────────────────────────────────── -->
-<script>
-(function () {
-  'use strict';
-
-  /* ── Header scroll ───────────────────────────── */
-  const header = document.getElementById('site-header');
-  function onScroll() {
-    header.classList.toggle('scrolled', window.scrollY > 60);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run once on load
-
-  /* ── Mobile menu ─────────────────────────────── */
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  function closeMobile() {
-    menuBtn.classList.remove('active');
-    mobileMenu.classList.remove('open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  menuBtn.addEventListener('click', () => {
-    const open = mobileMenu.classList.contains('open');
-    if (open) { closeMobile(); return; }
-    menuBtn.classList.add('active');
-    mobileMenu.classList.add('open');
-    menuBtn.setAttribute('aria-expanded', 'true');
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  });
-
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
-
-  /* ── Smooth scroll ───────────────────────────── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
-      closeMobile();
-      window.scrollTo({ top: target.offsetTop - 68, behavior: 'smooth' });
-    });
-  });
-
-  /* ── Scrollspy ───────────────────────────────── */
-  const navLinks = document.querySelectorAll('.nav-desktop a[href^="#"]');
-  const sections = Array.from(document.querySelectorAll('section[id]'));
-
-  const spy = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-        });
+      /* ── Header scroll ───────────────────────────── */
+      const header = document.getElementById('site-header');
+      function onScroll() {
+        header.classList.toggle('scrolled', window.scrollY > 60);
       }
-    });
-  }, { rootMargin: '-45% 0px -45% 0px' });
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // run once on load
 
-  sections.forEach(s => spy.observe(s));
+      /* ── Mobile menu ─────────────────────────────── */
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-  /* ── Scroll reveals ──────────────────────────── */
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObs.unobserve(entry.target);
+      function closeMobile() {
+        menuBtn.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
       }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.reveal, .stagger').forEach(el => revealObs.observe(el));
-
-  /* ── FAQ accordion ───────────────────────────── */
-  document.querySelectorAll('.faq-item').forEach(item => {
-    const btn = item.querySelector('.faq-q');
-    const body = item.querySelector('.faq-a');
-    btn.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      // close all
-      document.querySelectorAll('.faq-item.open').forEach(other => {
-        other.classList.remove('open');
-        other.querySelector('.faq-a').style.maxHeight = null;
+      menuBtn.addEventListener('click', () => {
+        const open = mobileMenu.classList.contains('open');
+        if (open) { closeMobile(); return; }
+        menuBtn.classList.add('active');
+        mobileMenu.classList.add('open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
       });
-      if (!isOpen) {
-        item.classList.add('open');
-        body.style.maxHeight = body.scrollHeight + 'px';
-      }
-    });
-  });
 
-})();
-</script>
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
+
+      /* ── Smooth scroll ───────────────────────────── */
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          const target = document.querySelector(a.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          closeMobile();
+          window.scrollTo({ top: target.offsetTop - 68, behavior: 'smooth' });
+        });
+      });
+
+      /* ── Scrollspy ───────────────────────────────── */
+      const navLinks = document.querySelectorAll('.nav-desktop a[href^="#"]');
+      const sections = Array.from(document.querySelectorAll('section[id]'));
+
+      const spy = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(link => {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
+          }
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+
+      sections.forEach(s => spy.observe(s));
+
+      /* ── Scroll reveals ──────────────────────────── */
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal, .stagger').forEach(el => revealObs.observe(el));
+
+      /* ── FAQ accordion ───────────────────────────── */
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const btn = item.querySelector('.faq-q');
+        const body = item.querySelector('.faq-a');
+        btn.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          // close all
+          document.querySelectorAll('.faq-item.open').forEach(other => {
+            other.classList.remove('open');
+            other.querySelector('.faq-a').style.maxHeight = null;
+          });
+          if (!isOpen) {
+            item.classList.add('open');
+            body.style.maxHeight = body.scrollHeight + 'px';
+          }
+        });
+      });
+
+    })();
+  </script>
+  <script>
+    (function () {
+      function checkConsent() {
+        // FixGDPR salva il consenso nei cookie/localStorage
+        const consent = localStorage.getItem("fixgdpr-consent");
+
+        if (!consent) return;
+
+        try {
+          const parsed = JSON.parse(consent);
+
+          // Se l'utente ha accettato tutto
+          if (parsed.accepted === true) {
+            loadAnalytics();
+          }
+
+          // Se ha accettato solo alcune categorie
+          if (parsed.categories && parsed.categories.statistics) {
+            loadAnalytics();
+          }
+
+        } catch (e) { }
+      }
+
+      // Controlla subito
+      checkConsent();
+
+      // Controlla anche dopo che l'utente clicca
+      window.addEventListener("click", function () {
+        setTimeout(checkConsent, 500);
+      });
+      window.addEventListener("fixgdpr:consent", function () {
+        setTimeout(checkConsent, 100);
+      });
+    })();
+  </script>
 
 </body>
+
 </html>
