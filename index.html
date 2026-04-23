@@ -2,6 +2,10 @@
 <html lang="it">
 
 <head>
+  <!-- Iubenda Embeds -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/980d933a-c5f4-4439-b78d-0decf6b5ef0e.js"
+    async></script>
+
   <!-- Google Analytics -->
   <script>
     function loadAnalytics() {
@@ -426,16 +430,22 @@
       <div class="footer-bottom">
         <span>© 2026 siteo &nbsp;·&nbsp; team@siteo.it</span>
         <div class="footer-links">
-          <a href="#">Privacy</a>
-          <a href="#">Termini</a>
-          <a href="#">Cookie</a>
+          <a href="https://www.iubenda.com/privacy-policy/44458744" class="iubenda-white iubenda-noiframe iubenda-embed"
+            title="Privacy Policy ">Privacy Policy</a>
+          <script
+            type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+          <!--<a href="#">Termini</a>-->
+          <a href="https://www.iubenda.com/privacy-policy/44458744/cookie-policy"
+            class="iubenda-white iubenda-noiframe iubenda-embed" title="Cookie Policy ">Cookie Policy</a>
+          <script
+            type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ─── SCRIPTS ────────────────────────────────── -->
-  <script src="https://fixgdpr.com/banner/6bacfc0e-e5db-4b53-8739-ae1f47d7359e.js" async></script>
+
   <script>
     (function () {
       'use strict';
@@ -534,37 +544,15 @@
   </script>
   <script>
     (function () {
-      function checkConsent() {
-        // FixGDPR salva il consenso nei cookie/localStorage
-        const consent = localStorage.getItem("fixgdpr-consent");
-
-        if (!consent) return;
-
-        try {
-          const parsed = JSON.parse(consent);
-
-          // Se l'utente ha accettato tutto
-          if (parsed.accepted === true) {
-            loadAnalytics();
-          }
-
-          // Se ha accettato solo alcune categorie
-          if (parsed.categories && parsed.categories.statistics) {
-            loadAnalytics();
-          }
-
-        } catch (e) { }
-      }
-
-      // Controlla subito
-      checkConsent();
-
-      // Controlla anche dopo che l'utente clicca
-      window.addEventListener("click", function () {
-        setTimeout(checkConsent, 500);
+      // Carica Analytics quando Iubenda riceve il consenso
+      window.addEventListener("iubenda_consent_given", function () {
+        loadAnalytics();
       });
-      window.addEventListener("fixgdpr:consent", function () {
-        setTimeout(checkConsent, 100);
+
+      // Se l'utente aveva già dato il consenso in una visita precedente,
+      // Iubenda lo segnala con questo evento al caricamento della pagina
+      window.addEventListener("iubenda_already_given", function () {
+        loadAnalytics();
       });
     })();
   </script>
